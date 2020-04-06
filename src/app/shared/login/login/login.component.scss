@@ -1,0 +1,44 @@
+.login {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 200px;
+  z-index: 500;
+  background-color: #ffffff;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 10px 6px rgba(0,0,0,0.23);
+  box-shadow: 0px 0px 10px 6px rgba(0,0,0,0.23);
+
+  .content {
+    margin: 0 auto;
+    display: flex;
+    border: 1px solid #ccc;
+    justify-content: center;
+
+    .item {
+      padding: 5px;
+      height: 50px;
+      text-align: center;
+      -webkit-transition:width 300ms ease-in-out, height 300ms ease-in-out;
+      -moz-transition:width 300ms ease-in-out, height 300ms ease-in-out;
+      -o-transition:width 300ms ease-in-out, height 300ms ease-in-out;
+      transition:width 300ms ease-in-out, height 300ms ease-in-out;
+
+      &:hover {
+        height: 250px;
+      }
+
+      .github-access-hide {
+        display: none;
+      }
+      .github-access-show {
+        padding: 25px;
+        display: block;
+      }
+    }
+
+    .form-login {
+      background-color: green($color: #000000);
+    }
+  }
+}
