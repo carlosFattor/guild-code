@@ -14,6 +14,9 @@ import { LoginModule } from '@shared/login/login.module';
     HomeRoutingModule,
     MapsModule,
     LoginModule
+  ],
+  exports: [
+    HomePageComponent
   ]
 })
 export class HomeModule { }

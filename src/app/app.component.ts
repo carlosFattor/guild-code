@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { environment } from '@environment';
 
 @Component({
   selector: 'gc-root',
@@ -9,6 +10,8 @@ export class AppComponent {
 
   title = 'guild-code';
 
-  constructor() { }
+  constructor() {
+    console.log({ env: environment });
+  }
 
 }

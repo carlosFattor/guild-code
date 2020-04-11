@@ -12,6 +12,11 @@ export class AppRoutingModule {
   static readonly routes: Routes = [
     {
       path: 'home',
+      component: HomePageComponent,
+      // loadChildren: () => import('./view/home/home.module').then(m => m.HomeModule)
+    },
+    {
+      path: 'github/oauth',
       loadChildren: () => import('./view/home/home.module').then(m => m.HomeModule)
     },
     {
