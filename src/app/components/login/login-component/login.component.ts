@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { environment } from '@environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { LoginApi } from '../login-service/login.api';
+import { UserModel } from '@domain/user.model';
+import { LoginService } from '../login-service/login.service';
 
 @Component({
   selector: 'gc-login',
@@ -16,24 +17,19 @@ export class LoginComponent implements OnInit {
   private readonly CLIENT_ID = environment.clientId;
   readonly GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${this.CLIENT_ID}`;
 
+  user$: Observable<UserModel> | null = null;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private loginApi: LoginApi
+    private loginService: LoginService
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.loadUserData(params);
-    });
-
-  }
-
-  loadUserData(params: Params): void {
-    if (params?.code) {
-      this.loginApi.fetchUserData(params.code).subscribe(
-        userData => console.log({ userData })
-      );
+    if (!this.user$) {
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.loginService.loadUserData(params);
+      });
     }
+    this.user$ = this.loginService.user$;
   }
 
   showHideLoginForm(): string {

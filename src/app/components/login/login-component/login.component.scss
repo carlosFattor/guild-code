@@ -37,6 +37,26 @@
       }
     }
 
+    .user-info {
+      padding: 5px;
+      min-height: 250px;
+      text-align: center;
+      width: -webkit-fill-available;
+
+      .avatar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 5px;
+
+        img {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+        }
+      }
+    }
+
     .form-login {
       background-color: green($color: #000000);
     }

@@ -16,14 +16,17 @@
       "dom"
     ],
     "paths": {
-      "@app/*": [
-        "./src/app/*"
-      ],
       "@shared/*": [
         "./src/app/shared/*"
       ],
       "@environment": [
         "./src/environments/environment.ts"
+      ],
+      "@domain/*": [
+        "./src/app/domain/*"
+      ],
+      "@components/*": [
+        "./src/app/components/*"
       ]
     }
   },

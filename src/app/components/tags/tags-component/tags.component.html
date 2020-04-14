@@ -1,0 +1,15 @@
+<div *ngIf="user">
+  <input name="tags" type="text" #tag (keyup.enter)="addTag(tag)" *ngIf="inputTag" >
+  <div *ngIf="user?.tags?.length > 0;else userInputTag" (click)="showInputTag(true)">
+    <ul>
+      <li *ngFor="let tag of user.tags">
+        <p (dblclick)="removeTag(tag)">{{tag}}</p>
+      </li>
+    </ul>
+  </div>
+  <ng-template #userInputTag>
+    <div (click)="showInputTag(true)">
+      <p>Click aqui e adicione as tecnologias que você conhece!</p>
+    </div>
+  </ng-template>
+</div>

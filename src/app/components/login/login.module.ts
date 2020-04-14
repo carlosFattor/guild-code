@@ -1,19 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login-component/login.component';
-import { ShowHideModule } from '@shared/others/show-hide/show-hide.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginApi } from './login-service/login.api';
+import { LoginService } from './login-service/login.service';
+import { StorageModule } from '@shared/storage/storage.module';
+import { TagsModule } from '@components/tags/tags.module';
 
 @NgModule({
   declarations: [LoginComponent],
   imports: [
     CommonModule,
     HttpClientModule,
-    ShowHideModule
+    StorageModule,
+    TagsModule
   ],
   providers: [
-    LoginApi
+    LoginApi,
+    LoginService
   ],
   exports: [LoginComponent]
 })

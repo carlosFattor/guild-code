@@ -3,10 +3,9 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MapsModule } from '@shared/maps/maps.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpApiInterceptor } from '@shared/security/interceptors/http-api-interceptor';
+import { HttpClientModule } from '@angular/common/http';
 import { SecurityModule } from '@shared/security/security.module';
-import { LoginApi } from '@shared/login/login-service/login.api';
+import { StorageModule } from './shared/storage/storage.module';
 
 @NgModule({
   declarations: [
@@ -17,10 +16,10 @@ import { LoginApi } from '@shared/login/login-service/login.api';
     AppRoutingModule,
     MapsModule.forRoot(),
     HttpClientModule,
-    SecurityModule
+    SecurityModule,
+    StorageModule
   ],
   providers: [
-    LoginApi
   ],
   bootstrap: [AppComponent]
 })
