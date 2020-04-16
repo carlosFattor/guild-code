@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SecurityModule } from '@shared/security/security.module';
 import { StorageModule } from './shared/storage/storage.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MapsModule.forRoot(),
     HttpClientModule,
     SecurityModule,
-    StorageModule
+    StorageModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
   ],

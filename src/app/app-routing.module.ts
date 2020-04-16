@@ -11,6 +11,10 @@ export class AppRoutingModule {
 
   static readonly routes: Routes = [
     {
+      path: '',
+      component: HomePageComponent
+    },
+    {
       path: 'home',
       component: HomePageComponent,
     },
@@ -20,7 +24,7 @@ export class AppRoutingModule {
     },
     {
       path: '',
-      redirectTo: '/home',
+      redirectTo: '',
       pathMatch: 'full'
     }
   ];
