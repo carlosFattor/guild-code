@@ -14,7 +14,7 @@ export class HttpJwtInterceptor implements HttpInterceptor {
 
   private HTTP_ERROR_CODE = 401;
   private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<null>(null);
 
   constructor(
     private authService: AuthService
@@ -59,7 +59,12 @@ export class HttpJwtInterceptor implements HttpInterceptor {
         take(1),
         switchMap(token => {
           return next.handle(this.addToken(request, token));
-        }));
+        }),
+        catchError((error: HttpErrorResponse) => {
+          this.authService.loggedOut();
+          return throwError(error);
+        })
+      );
     }
   }
 

@@ -34,8 +34,8 @@ export class TagsComponent implements OnInit {
     this.inputTag = false;
   }
 
-  removeTag(tag: string): void {
-    this.tagService.removeTag(tag);
+  removeTag($event: any): void {
+    this.tagService.removeTag($event);
     this.user.tags = this.tagService.userTags;
     this.inputTag = false;
   }

@@ -14,6 +14,7 @@ export class AuthService {
 
   private tokens: Tokens | null = null;
   private TOKEN_IDENTIFIER = 'tokenData';
+  isAuthenticated = false;
 
   constructor(
     private storage: StorageService,
@@ -32,6 +33,7 @@ export class AuthService {
       return data;
     });
     this.tokens = tokens;
+    this.isAuthenticated = true;
   }
 
   getJwtToken(): string | null {
@@ -54,5 +56,13 @@ export class AuthService {
         return of(objectTokens.tokens);
       })
     );
+  }
+
+  loggedOut(): void {
+    this.storage.localStorage(null, data => {
+      data = null;
+      return data;
+    });
+    this.isAuthenticated = false;
   }
 }

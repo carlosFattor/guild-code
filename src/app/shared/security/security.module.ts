@@ -4,6 +4,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpApiInterceptor } from './interceptors/http-api-interceptor';
 import { HttpJwtInterceptor } from './interceptors/http-jwt.interceptor';
 import { AuthService } from './services/auth.service';
+import { AuthGuardService } from './guard/auth-guard.service';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { AuthService } from './services/auth.service';
   ],
   providers: [
     AuthService,
+    AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpApiInterceptor,

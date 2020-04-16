@@ -6,14 +6,16 @@ import { MapsModule } from '@shared/maps/maps.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SecurityModule } from '@shared/security/security.module';
 import { StorageModule } from './shared/storage/storage.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    NgbModule,
     MapsModule.forRoot(),
     HttpClientModule,
     SecurityModule,
