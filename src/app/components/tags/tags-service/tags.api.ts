@@ -13,11 +13,6 @@ export class TagsApi {
   ) { }
 
   updateTags(tags: string[], email: string): Observable<void> {
-    return this.http.put<void>('/api/v1/users/tags', { tags, email })
-      .pipe(
-        catchError(error => {
-          throw new Error(error.message);
-        })
-      );
+    return this.http.put<void>('/api/v1/users/tags', { tags, email });
   }
 }

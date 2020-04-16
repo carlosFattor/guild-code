@@ -30,13 +30,14 @@ export class TagsComponent implements OnInit {
   addTag($event: any): void {
     const value = $event.value;
     this.tagService.addTags(value);
-    this.inputTag = false;
     this.user.tags = this.tagService.userTags;
+    this.inputTag = false;
   }
 
   removeTag(tag: string): void {
     this.tagService.removeTag(tag);
     this.user.tags = this.tagService.userTags;
+    this.inputTag = false;
   }
 
 }

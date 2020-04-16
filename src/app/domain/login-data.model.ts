@@ -1,6 +1,7 @@
 import { UserModel } from './user.model';
+import Tokens from './tokens.model';
 
 export interface LoginData {
-  tokenData: any;
+  tokenData: Tokens;
   userData?: UserModel;
 }

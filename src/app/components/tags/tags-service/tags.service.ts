@@ -43,7 +43,6 @@ export class TagsService {
   }
 
   private updateUserTags(tags: string[]): void {
-
     this.storage.localStorage(null, (data: any) => {
       data.userData.tags = tags;
       return data;
