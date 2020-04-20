@@ -6,22 +6,22 @@ import { MapsModule } from '@shared/maps/maps.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SecurityModule } from '@shared/security/security.module';
 import { StorageModule } from './shared/storage/storage.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ExceptionModule } from '@shared/exception/exception.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule,
     MapsModule.forRoot(),
     HttpClientModule,
     SecurityModule,
     StorageModule,
+    ExceptionModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
