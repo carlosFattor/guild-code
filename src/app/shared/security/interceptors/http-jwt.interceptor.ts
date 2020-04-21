@@ -51,7 +51,8 @@ export class HttpJwtInterceptor implements HttpInterceptor {
           this.isRefreshing = false;
           this.refreshTokenSubject.next(objectToken.token);
           return next.handle(this.addToken(request, objectToken.token));
-        }));
+        }),
+      );
 
     } else {
       return this.refreshTokenSubject.pipe(
@@ -59,10 +60,6 @@ export class HttpJwtInterceptor implements HttpInterceptor {
         take(1),
         switchMap(token => {
           return next.handle(this.addToken(request, token));
-        }),
-        catchError((error: HttpErrorResponse) => {
-          this.authService.loggedOut();
-          return throwError(error);
         })
       );
     }

@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorService } from './error.service';
 import { LoggingService } from './logging.service';
 import { NotificationService } from './notification.service';
+import { AuthService } from '@shared/security/services/auth.service';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
@@ -18,10 +19,11 @@ export class GlobalErrorHandler implements ErrorHandler {
     const errorService = this.injector.get(ErrorService);
     const logger = this.injector.get(LoggingService);
     const notifier = this.injector.get(NotificationService);
+    const authService = this.injector.get(AuthService);
 
     switch (error.constructor) {
       case HttpErrorResponse:
-        this.handleHttpErrorResponse(logger, notifier, errorService, error as HttpErrorResponse);
+        this.handleHttpErrorResponse(logger, notifier, errorService, error as HttpErrorResponse, authService);
         break;
 
       default:
@@ -35,24 +37,13 @@ export class GlobalErrorHandler implements ErrorHandler {
     logger: LoggingService,
     notifier: NotificationService,
     errorService: ErrorService,
-    error: HttpErrorResponse): void {
+    error: HttpErrorResponse,
+    auth: AuthService): void {
 
     const message = errorService.getServerMessage(error);
-    const stackTrace = errorService.getServerStack(error);
+    const stackTrace = errorService.getClientMessage(error);
     notifier.showError([message]);
     logger.logError(message, stackTrace);
+    auth.loggedOut();
   }
-
-  private handleDefaultError(
-    logger: LoggingService,
-    notifier: NotificationService,
-    errorService: ErrorService,
-    error: HttpErrorResponse): void {
-
-    const message = errorService.getServerMessage(error);
-    const stackTrace = errorService.getServerStack(error);
-    notifier.showError([message]);
-    logger.logError(message, stackTrace);
-  }
-
 }

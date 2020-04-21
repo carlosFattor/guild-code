@@ -1,3 +1,8 @@
-<span>
-  <p *ngFor="let msg of data?.messages">{{msg}}</p>
-</span>
+<div class="flex">
+  <div class="data" *ngFor="let msg of data?.messages">{{msg}}</div>
+  <div class="dismiss">
+    <button mat-icon-button (click)="snackBarRef.dismiss()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

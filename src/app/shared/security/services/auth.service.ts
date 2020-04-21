@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { StorageService } from '@shared/storage/storage.service';
 import Tokens from '@domain/tokens.model';
 import { LoginData } from '@domain/login-data.model';
-import { tap, switchMap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { tap, switchMap, catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class AuthService {
 
   constructor(
     private storage: StorageService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   loadTokens(): void {
@@ -54,6 +56,10 @@ export class AuthService {
     }).pipe(
       switchMap((objectTokens: { tokens: Tokens }) => {
         return of(objectTokens.tokens);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this.loggedOut();
+        return throwError(error);
       })
     );
   }
@@ -64,5 +70,6 @@ export class AuthService {
       return data;
     });
     this.isAuthenticated = false;
+    this.router.navigateByUrl('/');
   }
 }

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { TagsApi } from './tags.api';
-import { take, switchMap } from 'rxjs/operators';
+import { take, switchMap, catchError } from 'rxjs/operators';
 import { StorageService } from '@shared/storage/storage.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs/internal/observable/throwError';
+import { AuthService } from '@shared/security/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +31,12 @@ export class TagsService {
 
   private updateTag(): void {
     this.tagsApi.updateTags(this.userTags, this.userEmail)
-      .pipe(take(1))
+      .pipe(
+        take(1),
+        catchError((error: HttpErrorResponse) => {
+          return throwError(error);
+        })
+      )
       .subscribe(() => {
         this.updateUserTags(this.userTags);
       });

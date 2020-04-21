@@ -5,7 +5,7 @@ import { SnackInfoComponent } from '../snack-info/snack-info.component';
 @Injectable()
 export class SnackService {
 
-  private durationInSeconds = 5;
+  private durationInSeconds = 3;
 
   constructor(private snackBar: MatSnackBar) { }
 
