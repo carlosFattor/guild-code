@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
+import { SnackService } from '@shared/snack-messages/snack-service/snack-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
 
-  constructor() { }
+  constructor(
+    private snackService: SnackService
+  ) { }
 
-  showError(message: string | string[]): void {
-    console.log({ message });
+  showError(messages: string[]): void {
+    this.snackService.openSnackInfoC(messages);
   }
 
 }

@@ -11,7 +11,6 @@ export class GlobalErrorHandler implements ErrorHandler {
   constructor(private injector: Injector) { }
 
   handleError(error: Error): void {
-
     if (error instanceof HttpErrorResponse && error.status === this.HTTP_ERROR_CODE) {
       return;
     }
@@ -22,11 +21,11 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     switch (error.constructor) {
       case HttpErrorResponse:
-        this.handleHttpErrorResponse(logger, notifier, errorService, error as HttpErrorResponse)
+        this.handleHttpErrorResponse(logger, notifier, errorService, error as HttpErrorResponse);
         break;
 
       default:
-        this.handleDefaultError(logger, notifier, errorService, error as HttpErrorResponse)
+        console.log(error);
         break;
     }
 
@@ -40,7 +39,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     const message = errorService.getServerMessage(error);
     const stackTrace = errorService.getServerStack(error);
-    notifier.showError(message);
+    notifier.showError([message]);
     logger.logError(message, stackTrace);
   }
 
@@ -52,7 +51,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     const message = errorService.getServerMessage(error);
     const stackTrace = errorService.getServerStack(error);
-    notifier.showError(message);
+    notifier.showError([message]);
     logger.logError(message, stackTrace);
   }
 

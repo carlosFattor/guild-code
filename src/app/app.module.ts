@@ -9,6 +9,8 @@ import { StorageModule } from './shared/storage/storage.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ExceptionModule } from '@shared/exception/exception.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SnackMessagesModule } from '@shared/snack-messages/snack-messages.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ExceptionModule } from '@shared/exception/exception.module';
     SecurityModule,
     StorageModule,
     ExceptionModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    BrowserAnimationsModule,
+    SnackMessagesModule
   ],
   providers: [
   ],
