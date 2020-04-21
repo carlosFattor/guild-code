@@ -40,9 +40,10 @@ export class GlobalErrorHandler implements ErrorHandler {
     error: HttpErrorResponse,
     auth: AuthService): void {
 
+    const TIMEOUT = 5000;
     const message = errorService.getServerMessage(error);
     const stackTrace = errorService.getClientMessage(error);
-    notifier.showError([message]);
+    notifier.showError([message], TIMEOUT);
     logger.logError(message, stackTrace);
     auth.loggedOut();
   }
