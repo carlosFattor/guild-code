@@ -4,6 +4,8 @@ import { environment } from '@environment';
 import { Observable } from 'rxjs/internal/Observable';
 import { UserModel } from '@domain/user.model';
 import { LoginService } from '../login-service/login.service';
+import { AuthService } from '@shared/security/services/auth.service';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'gc-login',
@@ -20,7 +22,8 @@ export class LoginComponent implements OnInit {
   user$: Observable<UserModel> | null = null;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -34,5 +37,10 @@ export class LoginComponent implements OnInit {
 
   showHideLoginForm(): string {
     return (this.showHideFormLogin) ? 'github-access-show' : 'github-access-hide';
+  }
+
+  loggedOff(): void {
+    this.authService.loggedOut();
+    this.loginService.user$ = null;
   }
 }

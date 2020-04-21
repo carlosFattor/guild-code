@@ -3,8 +3,13 @@
     <div class="content">
       <div class="user-info">
         <div class="avatar">
-          <img src="{{user?.avatar_url}}" alt="">
-          <p>{{user.firstName}}</p>
+          <div>
+            <img src="{{user?.avatar_url}}" alt="">
+          </div>
+          <div>
+            <p>{{user.firstName}}</p>
+            <mat-icon class="logged-off" (click)="loggedOff()">arrow_forward</mat-icon>
+          </div>
         </div>
         <div class="tags">
           <gc-tags [user]="user"></gc-tags>

@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { ExceptionModule } from '@shared/exception/exception.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SnackMessagesModule } from '@shared/snack-messages/snack-messages.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SnackMessagesModule } from '@shared/snack-messages/snack-messages.modul
     ExceptionModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
-    SnackMessagesModule
+    SnackMessagesModule,
+    MatIconModule
   ],
   providers: [
   ],

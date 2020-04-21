@@ -6,6 +6,7 @@ import { LoginApi } from './login-service/login.api';
 import { LoginService } from './login-service/login.service';
 import { StorageModule } from '@shared/storage/storage.module';
 import { TagsModule } from '@components/tags/tags.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -13,7 +14,8 @@ import { TagsModule } from '@components/tags/tags.module';
     CommonModule,
     HttpClientModule,
     StorageModule,
-    TagsModule
+    TagsModule,
+    MatIconModule
   ],
   providers: [
     LoginApi,

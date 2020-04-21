@@ -54,6 +54,17 @@
           height: 60px;
           border-radius: 50%;
         }
+
+        .logged-off{
+          border-style: solid;
+          border-radius: 30%;
+          border-width: 1px;
+
+          &:hover {
+            cursor: pointer;
+            text-shadow: 0 0 3px #cccccc;
+          }
+        }
       }
     }
 
