@@ -1,3 +1,5 @@
+import { LatLng } from 'leaflet';
+
 export interface UserModel {
   login?: string;
   id?: string;
@@ -9,4 +11,5 @@ export interface UserModel {
   firstName?: string;
   lastName?: string;
   tags?: string[];
+  latLng?: LatLng;
 }

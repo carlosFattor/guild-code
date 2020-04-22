@@ -1,11 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { environment } from '@environment';
 import { Observable } from 'rxjs/internal/Observable';
 import { UserModel } from '@domain/user.model';
 import { LoginService } from '../login-service/login.service';
 import { AuthService } from '@shared/security/services/auth.service';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'gc-login',

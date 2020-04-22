@@ -13,7 +13,7 @@ import { SecurityModule } from '@shared/security/security.module';
     HomeRoutingModule,
     MapsModule,
     LoginModule,
-    SecurityModule
+    SecurityModule,
   ],
   exports: [
     HomePageComponent

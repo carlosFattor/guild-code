@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { latLng, Marker, Icon } from 'leaflet';
+import { Marker, Icon } from 'leaflet';
 
 @Component({
   selector: 'gc-home-page',
@@ -30,10 +30,10 @@ export class HomePageComponent implements OnInit {
       .bindPopup('<b>Hello world!</b><br>I am a popup.')
   ];
 
-  constructor() { }
+  constructor(
+  ) { }
 
   ngOnInit(): void {
-
   }
 
 }

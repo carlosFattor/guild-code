@@ -6,7 +6,6 @@ import { UserModel } from '@domain/user.model';
 import { tap, take, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 import { StorageService } from '@shared/storage/storage.service';
-import { UserGeoLocationService } from '@shared/geo-location/user-geo-location.service';
 import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
 
 @Injectable({
@@ -20,8 +19,7 @@ export class LoginService {
     private router: Router,
     private loginApi: LoginApi,
     private storage: StorageService,
-    private userState: UserStateService,
-    private userLocation: UserGeoLocationService
+    private userState: UserStateService
   ) {
     this.user$ = this.userState.user$;
   }
@@ -42,9 +40,5 @@ export class LoginService {
           tap(() => this.router.navigateByUrl('home'))
         );
     }
-  }
-
-  tryGetUserLocation(): void {
-    this.userLocation.getLocation();
   }
 }
