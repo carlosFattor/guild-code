@@ -29,7 +29,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (!this.user$) {
       this.activatedRoute.queryParams.subscribe(params => {
-        this.loginService.loadUserData(params);
+        if (params?.code) {
+          this.loginService.loadUserData(params);
+        }
       });
     }
     this.user$ = this.loginService.user$;

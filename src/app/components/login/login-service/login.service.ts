@@ -7,6 +7,7 @@ import { tap, take, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 import { StorageService } from '@shared/storage/storage.service';
 import { UserGeoLocationService } from '@shared/geo-location/user-geo-location.service';
+import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,14 @@ export class LoginService {
   user$: Observable<UserModel> | null = null;
 
   constructor(
+    private router: Router,
     private loginApi: LoginApi,
     private storage: StorageService,
-    private router: Router,
+    private userState: UserStateService,
     private userLocation: UserGeoLocationService
-  ) { }
+  ) {
+    this.user$ = this.userState.user$;
+  }
 
   loadUserData(params: Params): void {
     if (params?.code) {
@@ -32,29 +36,15 @@ export class LoginService {
             this.storage.localStorage(null, () => {
               return temp;
             });
-            this.tryLoadUserDataCookie();
-            this.tryGetUserLocation();
+            this.userState.user = temp;
           }),
-          switchMap(loginData => of(loginData.userData))
+          switchMap(loginData => of(loginData.userData)),
+          tap(() => this.router.navigateByUrl('home'))
         );
-    }
-    if (!this.user$) {
-      this.tryLoadUserDataCookie();
     }
   }
 
   tryGetUserLocation(): void {
     this.userLocation.getLocation();
-  }
-
-  private tryLoadUserDataCookie(): void {
-    this.user$ = null;
-    const temp = this.storage.localStorage('userData', (data) => {
-      return data;
-    });
-    if (temp) {
-      this.user$ = of(temp);
-      this.router.navigate(['/home'], { queryParams: { page: null } });
-    }
   }
 }

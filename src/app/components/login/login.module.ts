@@ -8,6 +8,7 @@ import { StorageModule } from '@shared/storage/storage.module';
 import { TagsModule } from '@components/tags/tags.module';
 import { MatIconModule } from '@angular/material/icon';
 import { GeoLocationModule } from '@shared/geo-location/geo-location.module';
+import { UserStateModule } from '@shared/user-state/user-state.module';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -17,6 +18,7 @@ import { GeoLocationModule } from '@shared/geo-location/geo-location.module';
     StorageModule,
     TagsModule,
     MatIconModule,
+    UserStateModule,
     GeoLocationModule
   ],
   providers: [
