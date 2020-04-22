@@ -7,6 +7,7 @@ import { LoginService } from './login-service/login.service';
 import { StorageModule } from '@shared/storage/storage.module';
 import { TagsModule } from '@components/tags/tags.module';
 import { MatIconModule } from '@angular/material/icon';
+import { GeoLocationModule } from '@shared/geo-location/geo-location.module';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -15,7 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
     HttpClientModule,
     StorageModule,
     TagsModule,
-    MatIconModule
+    MatIconModule,
+    GeoLocationModule
   ],
   providers: [
     LoginApi,
