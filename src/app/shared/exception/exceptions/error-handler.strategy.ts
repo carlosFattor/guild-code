@@ -26,6 +26,5 @@ export class ErrorHandlesStrategy {
       default:
         break;
     }
-
   }
 }

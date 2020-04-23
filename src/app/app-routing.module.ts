@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { environment as ENV } from '@environment';
-import { HomePageComponent } from './view/home/home-page.component';
+import { HomePageComponent } from './view/home/home-component/home-page.component';
 
 @NgModule({
   imports: [RouterModule.forRoot(AppRoutingModule.routes, { enableTracing: !ENV.production })],
@@ -16,7 +16,7 @@ export class AppRoutingModule {
     },
     {
       path: 'home',
-      component: HomePageComponent,
+      component: HomePageComponent
     },
     {
       path: 'github/oauth',

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { UserModel } from '@domain/user.model';
 import { LoginService } from '../login-service/login.service';
 import { AuthService } from '@shared/security/services/auth.service';
+import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
 
 @Component({
   selector: 'gc-login',
@@ -19,10 +20,12 @@ export class LoginComponent implements OnInit {
   readonly GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${this.CLIENT_ID}`;
 
   user$: Observable<UserModel> | null = null;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private loginService: LoginService,
-    private authService: AuthService
+    private authService: AuthService,
+    private userState: UserStateService
   ) { }
 
   ngOnInit(): void {
@@ -41,6 +44,7 @@ export class LoginComponent implements OnInit {
   }
 
   loggedOff(): void {
+    this.userState.user = null;
     this.authService.loggedOut();
     this.loginService.user$ = null;
   }

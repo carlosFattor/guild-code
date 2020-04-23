@@ -19,11 +19,4 @@ export class LoginApi {
 
     return this.http.post<LoginData>(`${this.URI_USER_BY_GITHUB}/${token}`, {});
   }
-
-  getUsers(): void {
-    this.http.get('/api/v1/users')
-      .subscribe(data => {
-        console.log({ data });
-      });
-  }
 }

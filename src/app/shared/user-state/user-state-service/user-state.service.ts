@@ -22,7 +22,7 @@ export class UserStateService {
     return this._user.getValue();
   }
 
-  set user(user: UserModel) {
+  set user(user: UserModel | null) {
     this._user.next(user);
   }
 

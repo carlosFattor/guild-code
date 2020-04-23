@@ -12,6 +12,8 @@ import { ExceptionModule } from '@shared/exception/exception.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SnackMessagesModule } from '@shared/snack-messages/snack-messages.module';
 import { MatIconModule } from '@angular/material/icon';
+import { UserServiceModule } from '@shared/user-service/user-service.module';
+import { UserService } from '@shared/user-service/user.service';
 
 @NgModule({
   declarations: [
