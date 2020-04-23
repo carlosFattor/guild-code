@@ -24,8 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private loginService: LoginService,
-    private authService: AuthService,
-    private userState: UserStateService
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -43,8 +42,7 @@ export class LoginComponent implements OnInit {
     return (this.showHideFormLogin) ? 'github-access-show' : 'github-access-hide';
   }
 
-  loggedOff(): void {
-    this.userState.user = null;
+  loggedOut(): void {
     this.authService.loggedOut();
     this.loginService.user$ = null;
   }

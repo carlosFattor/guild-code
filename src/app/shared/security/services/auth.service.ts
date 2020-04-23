@@ -7,6 +7,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class AuthService {
   isAuthenticated = false;
 
   constructor(
+    private userState: UserStateService,
     private storage: StorageService,
     private http: HttpClient,
     private router: Router
@@ -69,6 +71,7 @@ export class AuthService {
       data = null;
       return data;
     });
+    this.userState.user = null;
     this.isAuthenticated = false;
     this.router.navigateByUrl('/');
   }

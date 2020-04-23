@@ -16,7 +16,7 @@ export class EventBusService {
       .pipe(
         filter((e: EventEmitter<T>) => e.channel === event.channel),
         map((e: EventEmitter<T>) => e),
-        catchError(error => { throw new Error(`There are something wrong with event-bus = ${error.message}`) })
+        catchError(error => { throw new Error(`There is something wrong with event-bus = ${error.message}`) })
       )
       .subscribe((e: EventEmitter<T>) => action(e.value));
   }
