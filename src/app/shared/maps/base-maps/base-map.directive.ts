@@ -1,11 +1,8 @@
-import { OnInit, ElementRef, Directive, NgZone, Input, HostListener, Output, EventEmitter } from '@angular/core';
+import { OnInit, ElementRef, Directive, NgZone, Input, HostListener, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import {
   latLng,
   Marker,
   LatLng,
-  LatLngBounds,
-  LeafletEvent,
-  LeafletMouseEvent,
   map,
   Map,
   MapOptions,
@@ -16,7 +13,7 @@ import {
 @Directive({
   selector: '[gcBaseMap]'
 })
-export class BaseMapDirective implements OnInit {
+export class BaseMapDirective implements OnInit, OnChanges {
   /**
    * São Paulo position
    */
@@ -31,8 +28,9 @@ export class BaseMapDirective implements OnInit {
   map: Map | null = null;
   resizeTimer: any;
 
+  @Input('leafletZoom') zoom: number;
+  @Input('leafletCenter') center: LatLng;
   @Input('mapOptions') mapOptions: MapOptions = {};
-  @Input('zoomOptions') zoomOptions = {};
   @Input('markers') markers: Marker[] | null = null;
 
   @Output('mapReady') mapReady = new EventEmitter<Map>();
@@ -53,6 +51,24 @@ export class BaseMapDirective implements OnInit {
     this.doResize();
 
     this.mapReady.emit(this.map);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.zoom && changes.center && null != this.zoom && null != this.center) {
+      this.setView(changes.center.currentValue, changes.zoom.currentValue);
+    }
+
+    if (this.markers.length > 0 && this.map) {
+      this.addMarkers();
+    }
+  }
+
+  private setView(center: LatLng, zoom: number): void {
+
+    if (this.map && null != center && null != zoom) {
+      this.map.setView(center, zoom);
+    }
+
   }
 
   @HostListener('window:resize', [])

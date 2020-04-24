@@ -26,20 +26,20 @@ export class StorageService {
     storage: Storage,
     callback: StorageArgumentFunction<StorageType | null>
   ): StorageType | null {
-
     const serialized = storage.getItem(this.STORAGE_KEY);
     let parsed = null;
     if (serialized) {
       parsed = JSON.parse(serialized);
     }
-    const edited = callback(parsed);
-    storage.setItem(this.STORAGE_KEY, JSON.stringify(edited));
-    if (!identifier) {
-      return edited;
+    let edited: StorageType | null = null;
+    if (identifier && parsed) {
+      edited = callback(parsed[identifier]);
+      parsed[identifier] = edited;
+    } else {
+      edited = callback(parsed);
+      parsed = edited;
     }
-    if (edited) {
-      return edited[identifier];
-    }
-    return null;
+    storage.setItem(this.STORAGE_KEY, JSON.stringify(parsed));
+    return edited;
   }
 }

@@ -24,7 +24,9 @@ export class ErrorHandlesStrategy {
         return new GenericHttpErrorResponse(logger, notifier, errorService, authService, error);
 
       default:
-        break;
+        return new GenericHttpErrorResponse(logger, notifier, errorService, authService, error);
     }
+
+    console.log({ error });
   }
 }

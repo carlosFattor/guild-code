@@ -32,8 +32,8 @@ export class AuthService {
   }
 
   setTokens(tokens: Tokens): void {
-    this.storage.localStorage(null, (data: LoginData) => {
-      data.tokenData = { ...tokens };
+    this.storage.localStorage(this.TOKEN_IDENTIFIER, (data: Tokens) => {
+      data = { ...tokens };
       return data;
     });
     this.tokens = tokens;

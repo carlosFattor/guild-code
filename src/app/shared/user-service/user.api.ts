@@ -9,7 +9,7 @@ import { LatLng } from 'leaflet';
 })
 export class UserApi {
 
-  private URI_USER_LAT_LNG = '/api/v1/users/latlng';
+  private URI_USER = '/api/v1/users';
 
   constructor(
     private http: HttpClient
@@ -17,6 +17,11 @@ export class UserApi {
 
   updateUserLatLng(latLng: LatLng): Observable<UserModel> {
 
-    return this.http.put<UserModel>(`${this.URI_USER_LAT_LNG}`, latLng);
+    return this.http.put<UserModel>(`${this.URI_USER}/latlng`, latLng);
+  }
+
+  fetchUsers(): Observable<Array<UserModel>> {
+
+    return this.http.get<Array<UserModel>>(this.URI_USER);
   }
 }

@@ -6,6 +6,11 @@ import { UserChannel } from './user-channel';
 import { UserEventsEnum } from './user-events.enum';
 import { UserApi } from './user.api';
 import { take } from 'rxjs/operators';
+import { StorageService } from '@shared/storage/storage.service';
+import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
+import { UserModel } from '@domain/user.model';
+import { UtilsService } from '@shared/utils/utils.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +19,10 @@ export class UserService {
 
   constructor(
     private eventBusService: EventBusService,
-    private userApi: UserApi
+    private userApi: UserApi,
+    private store: StorageService,
+    private userState: UserStateService,
+    private utils: UtilsService
   ) {
   }
 
@@ -31,7 +39,14 @@ export class UserService {
         take(1)
       )
       .subscribe(userUpdated => {
-        console.log({ userUpdated });
+        const temp = this.store.localStorage<UserModel>('userData', (data) => {
+          return data = this.utils.getFieldsFromObject(userUpdated);
+        });
+        this.userState.user = temp;
       });
+  }
+
+  fetchUsers(): Observable<Array<UserModel>> {
+    return this.userApi.fetchUsers();
   }
 }

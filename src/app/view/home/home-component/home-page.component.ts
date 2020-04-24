@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { Marker, Icon } from 'leaflet';
-import { Observable, Subscription } from 'rxjs';
-import { UserModel } from '@domain/user.model';
+import { Marker, Icon, LatLng, MapOptions } from 'leaflet';
+import { Subscription, Subject, Observable } from 'rxjs';
 import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
 import { HomeService } from '../home-service/home.service';
 import { UserService } from '@shared/user-service/user.service';
+import { GeoLocationService } from '@shared/geo-location/geo-location.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'gc-home-page',
@@ -15,42 +16,32 @@ import { UserService } from '@shared/user-service/user.service';
 export class HomePageComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
-
-  mapOptions = {
-    zoom: 13
-  };
-
-  markOption = {
-    draggable: true,
-  };
-
-  markers = [
-    new Marker({ lat: -23.533773, lng: -46.625290 }),
-    new Marker({ lat: -23.55, lng: -46.625290 }),
-    new Marker({ lat: -23.56, lng: -46.625290 }, this.markOption)
-      .setIcon(new Icon({
-        iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7a/Firefox_Developer_Edition_Logo%2C_2017.svg',
-        iconSize: [30, 60],
-        iconAnchor: [15, 30],
-        popupAnchor: [0, -15]
-      }))
-      .bindPopup('<b>Hello world!</b><br>I am a popup.')
-  ];
+  markers$: Observable<Array<Marker> | null>;
+  mapOptions$: Observable<MapOptions | null>;
+  zoom: number | null = null;
+  center: LatLng | null = null;
 
   constructor(
     private userState: UserStateService,
-    private homeService: HomeService,
-    private userService: UserService
+    private userService: UserService,
+    private geoLocationService: GeoLocationService,
   ) { }
 
   ngOnInit(): void {
+    this.markers$ = this.geoLocationService.markers$;
+    this.mapOptions$ = this.geoLocationService.mapOptions$
+      .pipe(tap(data => {
+        this.zoom = data.zoom;
+        this.center = data.center as LatLng;
+      }));
     this.subscription.add(
       this.userService.initListening()
     );
+
     this.subscription.add(
       this.userState.user$.subscribe(user => {
-        if (user) {
-          this.homeService.verifyLatLng();
+        if (user && !user.loc) {
+          this.geoLocationService.getLocation();
         }
       })
     );

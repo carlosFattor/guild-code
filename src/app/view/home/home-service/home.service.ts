@@ -3,6 +3,7 @@ import { UserStateService } from '@shared/user-state/user-state-service/user-sta
 import { UserModel } from '@domain/user.model';
 import { GeoLocationService } from '@shared/geo-location/geo-location.service';
 import { Observable } from 'rxjs/internal/Observable';
+import { Location } from '@domain/location.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +11,13 @@ import { Observable } from 'rxjs/internal/Observable';
 export class HomeService {
 
   user$: Observable<UserModel> | null = null;
+  userLocation$: Observable<Location | null> = null;
 
   constructor(
     private userState: UserStateService,
-    private geoLocationService: GeoLocationService
+    private geoLocation: GeoLocationService
   ) {
     this.user$ = this.userState.user$;
-  }
-
-  verifyLatLng(): void {
-    if (!this.userState.user.latLng) {
-      this.geoLocationService.getLocation();
-    }
+    this.userLocation$ = this.geoLocation.userLocation$;
   }
 }

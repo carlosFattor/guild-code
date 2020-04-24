@@ -7,6 +7,7 @@ import { tap, take, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 import { StorageService } from '@shared/storage/storage.service';
 import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
+import { LoginData } from '@domain/login-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +31,11 @@ export class LoginService {
         .pipe(
           take(1),
           tap(data => {
-            const temp = this.storage.formatData(data);
+            const temp = this.storage.formatData<LoginData>(data);
             this.storage.localStorage(null, () => {
               return temp;
             });
-            this.userState.user = temp;
+            this.userState.user = temp.userData;
           }),
           switchMap(loginData => of(loginData.userData)),
           tap(() => this.router.navigateByUrl('home'))
