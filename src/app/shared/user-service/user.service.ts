@@ -10,12 +10,14 @@ import { StorageService } from '@shared/storage/storage.service';
 import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
 import { UserModel } from '@domain/user.model';
 import { UtilsService } from '@shared/utils/utils.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
+  userLatLngUpdated = new Subject<LatLng>();
 
   constructor(
     private eventBusService: EventBusService,
@@ -26,10 +28,17 @@ export class UserService {
   ) {
   }
 
-  initListening(): Subscription {
+  initListeningUserPositionUpdated(): Subscription {
     return this.eventBusService
       .on<LatLng>(new UserChannel(UserEventsEnum.LOAD_USER_LAT_LNG), value => {
         this.updateLatLng(value);
+      });
+  }
+
+  initListeningUserUpdatingLocation(): Subscription {
+    return this.eventBusService
+      .on<LatLng>(new UserChannel(UserEventsEnum.USER_UPDATE_POSITION), value => {
+        console.log({ value });
       });
   }
 
@@ -46,7 +55,7 @@ export class UserService {
       });
   }
 
-  fetchUsers(): Observable<Array<UserModel>> {
-    return this.userApi.fetchUsers();
+  fetchUsersByLatLng(center: LatLng, zoom: number): Observable<Array<UserModel>> {
+    return this.userApi.fetchUsersByLatLng(center, zoom);
   }
 }

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MapsModule } from '@shared/maps/maps.module';
+// import { MapsModule } from '@shared/maps/maps.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SecurityModule } from '@shared/security/security.module';
 import { StorageModule } from './shared/storage/storage.module';
@@ -12,8 +12,8 @@ import { ExceptionModule } from '@shared/exception/exception.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SnackMessagesModule } from '@shared/snack-messages/snack-messages.module';
 import { MatIconModule } from '@angular/material/icon';
-import { UserServiceModule } from '@shared/user-service/user-service.module';
-import { UserService } from '@shared/user-service/user.service';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LoginModule } from '@components/login/login.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { UserService } from '@shared/user-service/user.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MapsModule.forRoot(),
+    // MapsModule.forRoot(),
     HttpClientModule,
     SecurityModule,
     StorageModule,
@@ -30,7 +30,9 @@ import { UserService } from '@shared/user-service/user.service';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
     SnackMessagesModule,
-    MatIconModule
+    MatIconModule,
+    LeafletModule,
+    LoginModule
   ],
   providers: [
   ],

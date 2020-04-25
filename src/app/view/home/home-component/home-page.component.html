@@ -2,12 +2,14 @@
 <div class="map-container">
   <div class="map-frame">
     <div
-    id="map"
-    gcBaseMap
-    [mapOptions]="mapOptions$ | async"
-    [markers]="markers$ | async"
-    [leafletZoom]="zoom"
-    [leafletCenter]="center"
-    ></div>
+      id="map"
+      leaflet
+      [leafletOptions]="mapOptions$ | async"
+      [(leafletZoom)]="zoom"
+      [(leafletCenter)]="center"
+      [leafletLayers]="markers$ | async"
+      (leafletMapMoveEnd)="handleEvent('mapMoveEnd', $event)"
+      (leafletMapZoomEnd)="handleEvent('mapZoomEnd', $event)">
+    </div>
   </div>
 </div>

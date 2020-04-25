@@ -1,11 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { Marker, Icon, LatLng, MapOptions } from 'leaflet';
+import { Marker, Icon, LatLng, MapOptions, tileLayer, circle, polygon, marker, icon, Map } from 'leaflet';
 import { Subscription, Subject, Observable } from 'rxjs';
 import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
 import { HomeService } from '../home-service/home.service';
 import { UserService } from '@shared/user-service/user.service';
 import { GeoLocationService } from '@shared/geo-location/geo-location.service';
-import { tap } from 'rxjs/operators';
+import { tap, scan, debounceTime, distinctUntilChanged, switchMap, filter, map } from 'rxjs/operators';
+import { MapEvents } from '@shared/utils/map-events.enum';
+import { EventOptions } from '@shared/types/event-options';
 
 @Component({
   selector: 'gc-home-page',
@@ -20,23 +22,21 @@ export class HomePageComponent implements OnInit, OnDestroy {
   mapOptions$: Observable<MapOptions | null>;
   zoom: number | null = null;
   center: LatLng | null = null;
+  eventSubject: Subject<EventOptions> | null = null;
 
   constructor(
     private userState: UserStateService,
     private userService: UserService,
     private geoLocationService: GeoLocationService,
+    private homeService: HomeService
   ) { }
 
   ngOnInit(): void {
-    this.markers$ = this.geoLocationService.markers$;
-    this.mapOptions$ = this.geoLocationService.mapOptions$
-      .pipe(tap(data => {
-        this.zoom = data.zoom;
-        this.center = data.center as LatLng;
-      }));
-    this.subscription.add(
-      this.userService.initListening()
-    );
+    this.initListenings();
+  }
+
+  initListenings(): void {
+    this.initVars();
 
     this.subscription.add(
       this.userState.user$.subscribe(user => {
@@ -47,8 +47,26 @@ export class HomePageComponent implements OnInit, OnDestroy {
     );
   }
 
+  initVars(): void {
+    this.markers$ = this.homeService.markers$;
+    this.mapOptions$ = this.homeService.mapOptions$
+      .pipe(tap(data => {
+        this.zoom = data.zoom;
+        this.center = data.center as LatLng;
+      }));
+    this.eventSubject = this.homeService.eventSubject;
+  }
+
+  handleEvent(eventType: string, event: any): void {
+    const data: EventOptions = {
+      eventType,
+      center: this.center,
+      zoom: this.zoom
+    };
+    this.eventSubject.next(data);
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 }
