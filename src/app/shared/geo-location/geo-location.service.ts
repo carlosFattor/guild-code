@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { LatLng, Marker, MapOptions, Icon, tileLayer } from 'leaflet';
+import { LatLng, Marker, MapOptions, Icon, tileLayer, DivIcon, Util } from 'leaflet';
 import { EventBusService } from '@shared/event-bus/event-bus-service/event-bus.service';
 import { UserEventEmitter } from '@shared/user-service/users-event';
 import { UserEventsEnum } from '@shared/user-service/user-events.enum';
@@ -89,17 +89,25 @@ export class GeoLocationService implements OnDestroy {
 
   private formatMarkers(users: Array<UserModel>): void {
     const tempMarkers = new Array<Marker>();
-    users.forEach(user => {
+    users.forEach((user, i) => {
+      const iconSettings = {
+        // tslint:disable-next-line:max-line-length
+        mapIconUrl: `<svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 149 178"><defs><clipPath id="circleView"><circle cx="75" cy="75" r="55" fill="#FFFFFF" /></clipPath></defs><path fill="{mapIconColor}" stroke="#FFF" stroke-width="6" stroke-miterlimit="10" d="M126 23l-6-6A69 69 0 0 0 74 1a69 69 0 0 0-51 22A70 70 0 0 0 1 74c0 21 7 38 22 52l43 47c6 6 11 6 16 0l48-51c12-13 18-29 18-48 0-20-8-37-22-51z"/><circle fill="{mapIconColorInnerCircle}" cx="74" cy="75" r="61"/><circle fill="#FFF" cx="74" cy="75" r="{pinInnerCircleRadius}"/><image href="${user.avatar_url}" height="150px" width="150px" clip-path="url(#circleView)"/></svg>`,
+        mapIconColor: 'blue',
+        mapIconColorInnerCircle: '#fff',
+        pinInnerCircleRadius: 48
+      };
+
+      const divIcon = new DivIcon({
+        className: 'leaflet-data-marker',
+        html: Util.template(iconSettings.mapIconUrl, iconSettings),
+        iconAnchor: [18, 42],
+        iconSize: [60, 60],
+        popupAnchor: [0, -30]
+      });
       const lat = user.loc.coordinates[0];
       const lng = user.loc.coordinates[1];
-      const marker = new Marker({ lat, lng })
-        .setIcon(new Icon({
-          iconUrl: user.avatar_url,
-          iconSize: [60, 60],
-          iconAnchor: [15, 30],
-          popupAnchor: [0, -15]
-        }))
-        .bindPopup('<b>Hello world!</b><br>I am a popup.');
+      const marker = new Marker({ lat, lng }, { icon: divIcon, riseOnHover: true });
       tempMarkers.push(marker);
     });
     this.markers = tempMarkers;

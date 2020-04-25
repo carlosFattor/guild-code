@@ -1,12 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { Marker, Icon, LatLng, MapOptions, tileLayer, circle, polygon, marker, icon, Map } from 'leaflet';
+import { Marker, LatLng, MapOptions } from 'leaflet';
 import { Subscription, Subject, Observable } from 'rxjs';
 import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
 import { HomeService } from '../home-service/home.service';
 import { UserService } from '@shared/user-service/user.service';
 import { GeoLocationService } from '@shared/geo-location/geo-location.service';
-import { tap, scan, debounceTime, distinctUntilChanged, switchMap, filter, map } from 'rxjs/operators';
-import { MapEvents } from '@shared/utils/map-events.enum';
+import { tap } from 'rxjs/operators';
 import { EventOptions } from '@shared/types/event-options';
 
 @Component({

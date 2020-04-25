@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { EventBusService } from '@shared/event-bus/event-bus-service/event-bus.service';
 import { LatLng } from 'leaflet';
@@ -25,8 +25,7 @@ export class UserService {
     private store: StorageService,
     private userState: UserStateService,
     private utils: UtilsService
-  ) {
-  }
+  ) { }
 
   initListeningUserPositionUpdated(): Subscription {
     return this.eventBusService
@@ -35,12 +34,12 @@ export class UserService {
       });
   }
 
-  initListeningUserUpdatingLocation(): Subscription {
-    return this.eventBusService
-      .on<LatLng>(new UserChannel(UserEventsEnum.USER_UPDATE_POSITION), value => {
-        console.log({ value });
-      });
-  }
+  // initListeningUserUpdatingLocation(): Subscription {
+  //   return this.eventBusService
+  //     .on<LatLng>(new UserChannel(UserEventsEnum.USER_UPDATE_POSITION), value => {
+  //       console.log({ value });
+  //     });
+  // }
 
   updateLatLng(value: LatLng): void {
     this.userApi.updateUserLatLng(value)
