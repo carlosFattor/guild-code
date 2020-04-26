@@ -14,6 +14,8 @@ import { SnackMessagesModule } from '@shared/snack-messages/snack-messages.modul
 import { MatIconModule } from '@angular/material/icon';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LoginModule } from '@components/login/login.module';
+import { PopUpModule } from '@shared/pop-up/pop-up.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { LoginModule } from '@components/login/login.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     // MapsModule.forRoot(),
     HttpClientModule,
     SecurityModule,
@@ -35,6 +38,7 @@ import { LoginModule } from '@components/login/login.module';
     LoginModule
   ],
   providers: [
+    PopUpModule
   ],
   bootstrap: [AppComponent]
 })

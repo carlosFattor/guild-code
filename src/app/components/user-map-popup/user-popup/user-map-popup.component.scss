@@ -1,0 +1,26 @@
+.content {
+  display: flex;
+  border: 1px solid #ccc;
+  justify-content: center;
+
+  .user-info {
+    padding: 5px;
+    min-height: 100px;
+    min-width: 150px;
+    text-align: center;
+    width: -webkit-fill-available;
+
+    .avatar {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 5px;
+
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+    }
+  }
+}
