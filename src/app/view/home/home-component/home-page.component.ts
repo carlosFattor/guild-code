@@ -3,7 +3,6 @@ import { Marker, LatLng, MapOptions } from 'leaflet';
 import { Subscription, Subject, Observable } from 'rxjs';
 import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
 import { HomeService } from '../home-service/home.service';
-import { UserService } from '@shared/user-service/user.service';
 import { GeoLocationService } from '@shared/geo-location/geo-location.service';
 import { tap } from 'rxjs/operators';
 import { EventOptions } from '@shared/types/event-options';
@@ -25,7 +24,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   constructor(
     private userState: UserStateService,
-    private userService: UserService,
     private geoLocationService: GeoLocationService,
     private homeService: HomeService
   ) { }

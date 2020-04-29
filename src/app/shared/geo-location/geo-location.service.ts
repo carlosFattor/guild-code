@@ -3,13 +3,14 @@ import { LatLng, Marker, MapOptions, tileLayer, DivIcon, Util, Layer, Content, P
 import { EventBusService } from '@shared/event-bus/event-bus-service/event-bus.service';
 import { UserEventEmitter } from '@shared/user-service/users-event';
 import { UserEventsEnum } from '@shared/user-service/user-events.enum';
-import { BehaviorSubject, Subscription, of } from 'rxjs';
+import { BehaviorSubject, Subscription, of, throwError } from 'rxjs';
 import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
-import { tap, take } from 'rxjs/operators';
+import { tap, take, catchError } from 'rxjs/operators';
 import { UserService } from '@shared/user-service/user.service';
 import { UserModel } from '@domain/user.model';
 import { PopUpFactory } from '@shared/pop-up/pop-up-factory/pop-up.factory';
 import { GeoLocationUtils } from './geo-locations.utils';
+import { GeolocationErrorResponse } from '@shared/exception/exceptions/impl/geolocation-error.response';
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +74,11 @@ export class GeoLocationService implements OnDestroy {
   getMarkets(center: LatLng, zoom: number): void {
     this.userService.fetchUsersByLatLng(center, zoom)
       .pipe(
-        take(1)
+        take(1),
+        catchError((error: Error) => {
+          error.message = 'Não foi possivel obter informação de localização';
+          return throwError(new GeolocationErrorResponse(error));
+        })
       ).subscribe(users => {
         this.formatMarkers(users);
       });

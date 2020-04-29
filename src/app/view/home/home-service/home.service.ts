@@ -5,11 +5,12 @@ import { GeoLocationService } from '@shared/geo-location/geo-location.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { Location } from '@domain/location.interface';
 import { Marker, MapOptions, LatLng } from 'leaflet';
-import { tap, debounceTime, filter } from 'rxjs/operators';
-import { Subject, Subscription } from 'rxjs';
+import { tap, debounceTime, filter, catchError } from 'rxjs/operators';
+import { Subject, Subscription, throwError } from 'rxjs';
 import { EventOptions } from '@shared/types/event-options';
 import { MapEvents } from '@shared/utils/map-events.enum';
 import { UserService } from '@shared/user-service/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'

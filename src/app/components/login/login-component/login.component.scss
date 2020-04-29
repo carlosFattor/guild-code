@@ -37,7 +37,7 @@
     }
 
     .user-info {
-      padding: 5px;
+      padding: 10px;
       min-height: 250px;
       text-align: center;
       width: -webkit-fill-available;
@@ -64,6 +64,21 @@
             text-shadow: 0 0 3px #cccccc;
           }
         }
+      }
+
+      .icons-user-status {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 5px;
+
+        .mat-icon {
+          cursor: pointer;
+        }
+      }
+
+      .tags {
+        padding: 5px;
       }
     }
 

@@ -5,8 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class LoggingService {
 
-  constructor() { }
-
   logError(message: string, stackTrace: string): void {
     console.error({ message, stackTrace });
   }

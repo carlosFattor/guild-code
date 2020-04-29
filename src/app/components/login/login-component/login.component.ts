@@ -42,6 +42,10 @@ export class LoginComponent implements OnInit {
     return (this.showHideFormLogin) ? 'github-access-show' : 'github-access-hide';
   }
 
+  findMe(): void {
+    console.log('encontre-me');
+  }
+
   loggedOut(): void {
     this.authService.loggedOut();
     this.loginService.user$ = null;
