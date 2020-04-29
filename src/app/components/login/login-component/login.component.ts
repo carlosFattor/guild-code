@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
   }
 
   findMe(): void {
-    console.log('encontre-me');
+    this.loginService.centerUSer();
   }
 
   loggedOut(): void {

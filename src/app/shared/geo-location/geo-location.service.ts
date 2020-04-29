@@ -84,22 +84,6 @@ export class GeoLocationService implements OnDestroy {
       });
   }
 
-  private formatMarkers(users: Array<UserModel>): void {
-    const tempMarkers = new Array<Marker>();
-    users.forEach((user, i) => {
-
-      const iconSettings = this.geoLocUtils.iconDefaultValue(user);
-      const divIcon = this.geoLocUtils.getNewIcon(iconSettings.mapIconUrl, iconSettings);
-      const lat = user.loc.coordinates[0];
-      const lng = user.loc.coordinates[1];
-      const marker = new Marker({ lat, lng }, { icon: divIcon, riseOnHover: true });
-      marker.bindPopup(this.getRefComponent(user)).openPopup();
-      tempMarkers.push(marker);
-
-    });
-    this.markers = tempMarkers;
-  }
-
   getRefComponent(user: UserModel): string | HTMLElement | ((layer: Layer) => Content) | Popup {
     return this.popUpFactory.loadComponent(user);
   }
@@ -116,6 +100,28 @@ export class GeoLocationService implements OnDestroy {
     } else {
       throw new Error('It\'s impossible to get user location');
     }
+  }
+
+  updateCenterMap(center: LatLng): void {
+    const temp = this.mapOptions;
+    temp.center = center;
+    this.mapOptions = temp;
+  }
+
+  private formatMarkers(users: Array<UserModel>): void {
+    const tempMarkers = new Array<Marker>();
+    users.forEach((user, i) => {
+
+      const iconSettings = this.geoLocUtils.iconDefaultValue(user);
+      const divIcon = this.geoLocUtils.getNewIcon(iconSettings.mapIconUrl, iconSettings);
+      const lat = user.loc.coordinates[0];
+      const lng = user.loc.coordinates[1];
+      const marker = new Marker({ lat, lng }, { icon: divIcon, riseOnHover: true });
+      marker.bindPopup(this.getRefComponent(user)).openPopup();
+      tempMarkers.push(marker);
+
+    });
+    this.markers = tempMarkers;
   }
 
   ngOnDestroy(): void {

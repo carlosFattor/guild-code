@@ -8,6 +8,8 @@ import { of } from 'rxjs/internal/observable/of';
 import { StorageService } from '@shared/storage/storage.service';
 import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
 import { LoginData } from '@domain/login-data.model';
+import { GeoLocationService } from '@shared/geo-location/geo-location.service';
+import { LatLng } from 'leaflet';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,8 @@ export class LoginService {
     private router: Router,
     private loginApi: LoginApi,
     private storage: StorageService,
-    private userState: UserStateService
+    private userState: UserStateService,
+    private geoLocationService: GeoLocationService
   ) {
     this.user$ = this.userState.user$;
   }
@@ -41,5 +44,12 @@ export class LoginService {
           tap(() => this.router.navigateByUrl('home'))
         );
     }
+  }
+
+  centerUSer(): void {
+
+    const temp = this.userState.user.loc.coordinates;
+    const center = new LatLng(temp[0], temp[1]);
+    this.geoLocationService.updateCenterMap(center);
   }
 }
