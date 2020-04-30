@@ -30,6 +30,7 @@ export class UserService {
   initListeningUserPositionUpdated(): Subscription {
     return this.eventBusService
       .on<LatLng>(new UserChannel(UserEventsEnum.LOAD_USER_LAT_LNG), value => {
+        debugger;
         this.updateLatLng(value);
       });
   }

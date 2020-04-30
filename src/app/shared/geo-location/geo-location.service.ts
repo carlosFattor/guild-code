@@ -57,7 +57,7 @@ export class GeoLocationService implements OnDestroy {
     return this.userState.user$
       .pipe(
         tap(user => {
-          if (user && user.loc) {
+          if (user && user?.loc?.coordinates) {
             const temp = this.mapOptions;
             this.geoLocUtils.center = new LatLng(user.loc.coordinates[0], user.loc.coordinates[1]);
             temp.center = this.geoLocUtils.center;
@@ -93,6 +93,7 @@ export class GeoLocationService implements OnDestroy {
       navigator.geolocation.getCurrentPosition((position) => {
         const longitude = position.coords.longitude;
         const latitude = position.coords.latitude;
+        debugger;
         this.eventBusService.emit<LatLng>(new UserEventEmitter(UserEventsEnum.LOAD_USER_LAT_LNG, new LatLng(latitude, longitude)));
       }, (error) => {
         console.log({ error });
