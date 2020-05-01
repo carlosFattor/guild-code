@@ -12,10 +12,12 @@ export class PopUpFactory {
     private injector: Injector
   ) { }
 
-  loadComponent(user: UserModel): any {
+  loadComponent(user: UserModel, userUpdatingPosition = false, userNewLocation = null): any {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UserMapPopupComponent);
     const component = componentFactory.create(this.injector);
     component.instance.user = user;
+    component.instance.userUpdatingPosition = userUpdatingPosition;
+    component.instance.userNewLocation = userNewLocation;
     component.changeDetectorRef.detectChanges();
     return component.location.nativeElement;
   }

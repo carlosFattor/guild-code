@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from './user.service';
 import { UserApi } from './user.api';
 import { UtilsModule } from '@shared/utils/utils.module';
+import { NotificationModule } from '@shared/notification/notification.module';
 
 
 
@@ -10,7 +11,8 @@ import { UtilsModule } from '@shared/utils/utils.module';
   declarations: [],
   imports: [
     CommonModule,
-    UtilsModule
+    UtilsModule,
+    NotificationModule
   ],
   providers: [
     UserService,

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GlobalErrorHandler } from './exceptions/global-error-handler.service';
 import { SnackMessagesModule } from '@shared/snack-messages/snack-messages.module';
 import { ErrorHandlesStrategy } from './exceptions/error-handler.strategy';
+import { NotificationModule } from '@shared/notification/notification.module';
 
 
 
@@ -10,7 +11,8 @@ import { ErrorHandlesStrategy } from './exceptions/error-handler.strategy';
   declarations: [],
   imports: [
     CommonModule,
-    SnackMessagesModule
+    SnackMessagesModule,
+    NotificationModule
   ],
   providers: [
     ErrorHandlesStrategy,

@@ -17,4 +17,10 @@ export class NotificationService {
     });
   }
 
+  showInfoMessage(messages: string[], duration?: number): void {
+    this.zone.runGuarded(() => {
+      this.snackService.openSnackInfoC(messages, duration);
+    });
+  }
+
 }

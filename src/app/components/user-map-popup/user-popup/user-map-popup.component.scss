@@ -2,6 +2,7 @@
   display: flex;
   border: 1px solid #ccc;
   justify-content: center;
+  flex-direction: column;
 
   .user-info {
     padding: 5px;
@@ -22,5 +23,11 @@
         border-radius: 50%;
       }
     }
+  }
+
+  .user-update-location {
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px;
   }
 }

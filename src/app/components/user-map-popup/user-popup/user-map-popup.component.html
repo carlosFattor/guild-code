@@ -9,4 +9,10 @@
       </div>
     </div>
   </div>
+  <div *ngIf="userUpdatingPosition" class="user-update-location">
+    <button mat-flat-button color="primary" (click)="eventUpdatingLocation()">
+      <mat-icon>my_location</mat-icon>
+      update
+    </button>
+  </div>
 </section>

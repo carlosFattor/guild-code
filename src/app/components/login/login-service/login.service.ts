@@ -47,7 +47,6 @@ export class LoginService {
   }
 
   centerUSer(): void {
-
     const temp = this.userState.user.loc.coordinates;
     const center = new LatLng(temp[0], temp[1]);
     this.geoLocationService.updateCenterMap(center);

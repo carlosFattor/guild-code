@@ -11,6 +11,7 @@ import { UserModel } from '@domain/user.model';
 import { PopUpFactory } from '@shared/pop-up/pop-up-factory/pop-up.factory';
 import { GeoLocationUtils } from './geo-locations.utils';
 import { GeolocationErrorResponse } from '@shared/exception/exceptions/impl/geolocation-error.response';
+import { UserChannel } from '@shared/user-service/user-channel';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class GeoLocationService implements OnDestroy {
   // tslint:disable-next-line: variable-name
   private readonly _markers = new BehaviorSubject<Array<Marker>>(new Array<Marker>());
   markers$ = this._markers.asObservable();
+  private userUpdatingPosition = false;
 
   get markers(): Array<Marker> {
     return this._markers.getValue();
@@ -45,12 +47,13 @@ export class GeoLocationService implements OnDestroy {
   }
 
   constructor(
-    private eventBusService: EventBusService,
+    private eventBus: EventBusService,
     private userState: UserStateService,
     private userService: UserService,
     private popUpFactory: PopUpFactory
   ) {
     this.initListening();
+    this.listeningUserUpdatingLocation();
   }
 
   initListening(): Subscription {
@@ -71,7 +74,22 @@ export class GeoLocationService implements OnDestroy {
       .subscribe();
   }
 
+  listeningUserUpdatingLocation(): Subscription {
+    return this.eventBus
+      .on<LatLng>(new UserChannel(UserEventsEnum.USER_UPDATE_POSITION), value => {
+        this.userService.updateLatLng(value);
+        this.userUpdatingPosition = false;
+      });
+  }
+
+  listeningUserUpdatingPosition(newLocation: LatLng): void {
+    this.userUpdatingPosition = true;
+    const user = this.userState.user;
+    this.formatMarkers([user], this.userUpdatingPosition, newLocation);
+  }
+
   getMarkets(center: LatLng, zoom: number): void {
+
     this.userService.fetchUsersByLatLng(center, zoom)
       .pipe(
         take(1),
@@ -80,12 +98,16 @@ export class GeoLocationService implements OnDestroy {
           return throwError(new GeolocationErrorResponse(error));
         })
       ).subscribe(users => {
-        this.formatMarkers(users);
+        if (!this.userUpdatingPosition) {
+          this.formatMarkers(users);
+        }
       });
   }
 
-  getRefComponent(user: UserModel): string | HTMLElement | ((layer: Layer) => Content) | Popup {
-    return this.popUpFactory.loadComponent(user);
+  getRefComponent(user: UserModel, userUpdatingPosition = false, userNewLocation = null)
+    : string | HTMLElement | ((layer: Layer) => Content) | Popup {
+
+    return this.popUpFactory.loadComponent(user, userUpdatingPosition, userNewLocation);
   }
 
   getLocation(): void {
@@ -93,8 +115,7 @@ export class GeoLocationService implements OnDestroy {
       navigator.geolocation.getCurrentPosition((position) => {
         const longitude = position.coords.longitude;
         const latitude = position.coords.latitude;
-        debugger;
-        this.eventBusService.emit<LatLng>(new UserEventEmitter(UserEventsEnum.LOAD_USER_LAT_LNG, new LatLng(latitude, longitude)));
+        this.eventBus.emit<LatLng>(new UserEventEmitter(UserEventsEnum.LOAD_USER_LAT_LNG, new LatLng(latitude, longitude)));
       }, (error) => {
         console.log({ error });
       }, { maximumAge: 600000, timeout: 10000, enableHighAccuracy: true });
@@ -109,18 +130,38 @@ export class GeoLocationService implements OnDestroy {
     this.mapOptions = temp;
   }
 
-  private formatMarkers(users: Array<UserModel>): void {
+  private formatMarkers(users: Array<UserModel>, userUpdatingPosition: boolean = false, newLocation?: LatLng): void {
     const tempMarkers = new Array<Marker>();
-    users.forEach((user, i) => {
+    const userLogged = this.userState.user;
 
+    users.forEach((user, i) => {
       const iconSettings = this.geoLocUtils.iconDefaultValue(user);
       const divIcon = this.geoLocUtils.getNewIcon(iconSettings.mapIconUrl, iconSettings);
-      const lat = user.loc.coordinates[0];
-      const lng = user.loc.coordinates[1];
-      const marker = new Marker({ lat, lng }, { icon: divIcon, riseOnHover: true });
-      marker.bindPopup(this.getRefComponent(user)).openPopup();
-      tempMarkers.push(marker);
 
+      let center: LatLng | null = null;
+      if (!userUpdatingPosition) {
+        center = this.geoLocUtils.formatLatLng(user.loc.coordinates[0], user.loc.coordinates[1]);
+      } else {
+        center = newLocation;
+      }
+      const markerOptions = { icon: divIcon, riseOnHover: true, draggable: false };
+
+      if (
+        userLogged.loc.coordinates[0] === user.loc.coordinates[0] &&
+        userLogged.loc.coordinates[1] === user.loc.coordinates[1]
+      ) {
+        markerOptions.draggable = true;
+      }
+
+      const marker = new Marker(center, markerOptions);
+      marker.bindPopup(this.getRefComponent(user, userUpdatingPosition, newLocation)).openPopup();
+      if (markerOptions.draggable) {
+        marker.on('dragend', (data) => {
+          this.listeningUserUpdatingPosition(data.target.getLatLng());
+        });
+
+      }
+      tempMarkers.push(marker);
     });
     this.markers = tempMarkers;
   }

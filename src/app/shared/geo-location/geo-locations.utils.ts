@@ -46,4 +46,8 @@ export class GeoLocationUtils {
       popupAnchor: [15, -40]
     });
   }
+
+  formatLatLng(lat: number, lng: number): LatLng {
+    return new LatLng(lat, lng);
+  }
 }

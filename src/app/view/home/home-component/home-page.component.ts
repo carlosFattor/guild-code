@@ -37,7 +37,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.userState.user$.subscribe(user => {
-        debugger;
         if (user && !user?.loc?.coordinates) {
           this.geoLocationService.getLocation();
         }

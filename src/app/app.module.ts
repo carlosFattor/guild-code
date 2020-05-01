@@ -16,6 +16,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LoginModule } from '@components/login/login.module';
 import { PopUpModule } from '@shared/pop-up/pop-up.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     LoginModule
   ],
   providers: [
-    PopUpModule
+    PopUpModule,
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ],
   bootstrap: [AppComponent]
 })

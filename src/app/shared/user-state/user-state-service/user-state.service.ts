@@ -12,6 +12,7 @@ export class UserStateService {
   private _user = new BehaviorSubject<UserModel | null>(null);
   readonly user$ = this._user.asObservable();
 
+
   constructor(
     private storage: StorageService
   ) {
@@ -27,7 +28,7 @@ export class UserStateService {
   }
 
   private tryLoadUserDataCookie(): void {
-    const temp = this.storage.localStorage('userData', (data) => {
+    const temp = this.storage.localStorage('userData', (data: UserModel) => {
       return data;
     });
     if (temp) {

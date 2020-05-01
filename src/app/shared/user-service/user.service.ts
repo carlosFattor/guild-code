@@ -11,6 +11,7 @@ import { UserStateService } from '@shared/user-state/user-state-service/user-sta
 import { UserModel } from '@domain/user.model';
 import { UtilsService } from '@shared/utils/utils.service';
 import { Observable, Subject } from 'rxjs';
+import { NotificationService } from '@shared/notification/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,23 +25,16 @@ export class UserService {
     private userApi: UserApi,
     private store: StorageService,
     private userState: UserStateService,
-    private utils: UtilsService
+    private utils: UtilsService,
+    private notificationService: NotificationService
   ) { }
 
   initListeningUserPositionUpdated(): Subscription {
     return this.eventBusService
       .on<LatLng>(new UserChannel(UserEventsEnum.LOAD_USER_LAT_LNG), value => {
-        debugger;
         this.updateLatLng(value);
       });
   }
-
-  // initListeningUserUpdatingLocation(): Subscription {
-  //   return this.eventBusService
-  //     .on<LatLng>(new UserChannel(UserEventsEnum.USER_UPDATE_POSITION), value => {
-  //       console.log({ value });
-  //     });
-  // }
 
   updateLatLng(value: LatLng): void {
     this.userApi.updateUserLatLng(value)
@@ -52,6 +46,7 @@ export class UserService {
           return data = this.utils.getFieldsFromObject(userUpdated);
         });
         this.userState.user = temp;
+        this.notificationService.showInfoMessage(['User location updated!']);
       });
   }
 
