@@ -29,8 +29,11 @@ export class AppComponent {
             console.log('[App] Push message received', message);
           });
         this.swPush.notificationClicks
-          .subscribe((data) => {
-            console.log('[Click] Notification clicked: ', data);
+          .subscribe((event) => {
+            console.log('[Click] Notification clicked: ', event);
+            if (event.notification.data.url) {
+              window.location = event.notification.data.url;
+            }
           });
       })
       .catch(err => console.error('Could not subscribe to notifications', err));
