@@ -17,6 +17,7 @@ import { LoginModule } from '@components/login/login.module';
 import { PopUpModule } from '@shared/pop-up/pop-up.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { RegisterModule } from '@shared/register/register.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     SnackMessagesModule,
     MatIconModule,
     LeafletModule,
-    LoginModule
+    LoginModule,
+    RegisterModule
   ],
   providers: [
     PopUpModule,
