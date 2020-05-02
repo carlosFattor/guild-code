@@ -7,11 +7,13 @@ import { Observable } from 'rxjs';
 })
 export class RegisterApi {
 
+  private basePath = '/api/v1/notifier';
+
   constructor(
     private httpClient: HttpClient
   ) { }
 
   register(subscription: any): Observable<any> {
-    return this.httpClient.post('/api/v1/subscriber', { subscription });
+    return this.httpClient.post(`${this.basePath}/subscriber`, { subscription });
   }
 }
