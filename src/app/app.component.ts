@@ -12,20 +12,22 @@ import { RegisterService } from '@shared/register/register.service';
 export class AppComponent {
 
   title = 'guild-code';
-  readonly
 
   constructor(
     private swPush: SwPush,
     private registerService: RegisterService
   ) {
-    console.log({ env: environment });
-
     this.swPush.requestSubscription({
       serverPublicKey: environment.VAPID_PUBLIC_KEY
     })
       .then(sub => {
-        console.log('sub: ', sub);
         this.registerService.registerSubscriber(sub);
+      })
+      .then(() => {
+        this.swPush.messages
+          .subscribe((message) => {
+            console.log('[App] Push message received', message);
+          });
       })
       .catch(err => console.error('Could not subscribe to notifications', err));
   }

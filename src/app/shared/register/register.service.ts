@@ -14,8 +14,6 @@ export class RegisterService {
   registerSubscriber(subscriber: any): void {
     this.registerApi.register(subscriber)
       .pipe(take(1))
-      .subscribe(data => {
-        console.log({ data });
-      });
+      .subscribe();
   }
 }
