@@ -28,6 +28,10 @@ export class AppComponent {
           .subscribe((message) => {
             console.log('[App] Push message received', message);
           });
+        this.swPush.notificationClicks
+          .subscribe((data) => {
+            console.log('[Click] Notification clicked: ', data);
+          });
       })
       .catch(err => console.error('Could not subscribe to notifications', err));
   }
