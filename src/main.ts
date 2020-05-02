@@ -11,6 +11,6 @@ if (environment.production) {
 platformBrowserDynamic().bootstrapModule(AppModule).then(() => {
   if (environment.production && 'serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistration().then(active =>
-      !active && navigator.serviceWorker.register('/ngsw-worker.js')).catch(console.error);
+      !active && navigator.serviceWorker.register('/custom-ngsw-worker.js')).catch(console.error);
   }
 }).catch(err => console.log(err));

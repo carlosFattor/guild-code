@@ -29,6 +29,16 @@
               "src/assets",
               "src/_redirects",
               {
+                "glob": "package.json",
+                "input": "./",
+                "output": "assets"
+              },
+              {
+                "glob": "custom-ngsw-config.js",
+                "input": "./",
+                "output": "/"
+              },
+              {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images/",
                 "output": "./assets/"
