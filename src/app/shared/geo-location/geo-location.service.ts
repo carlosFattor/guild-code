@@ -147,6 +147,7 @@ export class GeoLocationService implements OnDestroy {
       const markerOptions = { icon: divIcon, riseOnHover: true, draggable: false };
 
       if (
+        userLogged &&
         userLogged.loc.coordinates[0] === user.loc.coordinates[0] &&
         userLogged.loc.coordinates[1] === user.loc.coordinates[1]
       ) {

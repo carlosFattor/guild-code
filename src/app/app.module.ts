@@ -18,6 +18,7 @@ import { PopUpModule } from '@shared/pop-up/pop-up.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { RegisterModule } from '@shared/register/register.module';
+import { PushNotificationModule } from '@shared/push-notification/push-notification.module';
 
 @NgModule({
   declarations: [
@@ -32,13 +33,14 @@ import { RegisterModule } from '@shared/register/register.module';
     SecurityModule,
     StorageModule,
     ExceptionModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('custom-ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
     SnackMessagesModule,
     MatIconModule,
     LeafletModule,
     LoginModule,
-    RegisterModule
+    RegisterModule,
+    PushNotificationModule
   ],
   providers: [
     PopUpModule,

@@ -1,41 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { environment } from '@environment';
 import { SwPush } from '@angular/service-worker';
-import { HttpClient } from '@angular/common/http';
 import { RegisterService } from '@shared/register/register.service';
+import { PushNotificationService } from '@shared/push-notification/push-notification.service';
 
 @Component({
   selector: 'gc-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   title = 'guild-code';
 
   constructor(
-    private swPush: SwPush,
-    private registerService: RegisterService
+    private pushNotification: PushNotificationService
   ) {
-    this.swPush.requestSubscription({
-      serverPublicKey: environment.VAPID_PUBLIC_KEY
-    })
-      .then(sub => {
-        this.registerService.registerSubscriber(sub);
-      })
-      .then(() => {
-        this.swPush.messages
-          .subscribe((message) => {
-            console.log('[App] Push message received', message);
-          });
-        this.swPush.notificationClicks
-          .subscribe((event) => {
-            console.log('[Click] Notification clicked: ', event);
-            if (event.notification.data.url) {
-              window.location = event.notification.data.url;
-            }
-          });
-      })
-      .catch(err => console.error('Could not subscribe to notifications', err));
+  }
+  ngOnInit(): void {
+    this.pushNotification.requestSubscription();
   }
 }

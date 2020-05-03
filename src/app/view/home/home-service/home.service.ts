@@ -31,9 +31,6 @@ export class HomeService implements OnDestroy {
       this.userService.initListeningUserPositionUpdated()
     );
 
-    // this.subScrip.add(
-    //   this.userService.initListeningUserUpdatingLocation()
-    // );
     this.initVars();
     this.handleEventMap();
   }
