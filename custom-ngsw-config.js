@@ -13,31 +13,30 @@ importScripts('./ngsw-worker.js');
       });
     };
 
-    self.addEventListener('notificationclick', (event) => {
-        console.log("This is custom service worker notificationclick method.");
-        console.log('Notification details: ', event.notification);
-        // Write the code to open
-        if (clients.openWindow && event.notification.data.url) {
-            event.waitUntil(clients.openWindow(event.notification.data.url));
-        }
-    });
+    // self.addEventListener('notificationclick', (event) => {
+    //     console.log('Notification details: ', event.notification);
+    //     // Write the code to open
+    //     // if (clients.openWindow && event.notification.data.url) {
+    //     //     event.waitUntil(clients.openWindow(event.notification.data.url));
+    //     // }
+    // });
     self.addEventListener('push', function(event) {
       const payload = event.data.json();
-      console.log('push');
-      console.log(payload.notification.title, payload.notification)
-      event.waitUntil(
-        showNotification(payload.notification.title, payload.notification)
-      );
+      console.log('push', {payload})
+      // event.waitUntil(
+      //   showNotification(payload.notification.title, payload.notification)
+      // );
     });
     self.addEventListener('notificationclick', function(event) {
       event.notification.close();
-      if(event.notification && event.notification.data && event.notification.data.link) {
-        const notificationPage = event.notification.data.link;
-        console.log('notificationclick');
-        event.waitUntil(
-          clients.openWindow(notificationPage)
-        );
-      }
+      console.log('notificationclick', {event});
+      // if(event.notification && event.notification.data && event.notification.data.link) {
+      //   const notificationPage = event.notification.data.link;
+      //   console.log('notificationclick');
+      //   event.waitUntil(
+      //     clients.openWindow(notificationPage)
+      //   );
+      // }
     });
   }
 ());
