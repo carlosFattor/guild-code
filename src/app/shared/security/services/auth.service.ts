@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from '@shared/storage/storage.service';
 import Tokens from '@domain/tokens.model';
-import { LoginData } from '@domain/login-data.model';
-import { tap, switchMap, catchError } from 'rxjs/operators';
+import { switchMap, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { of, throwError } from 'rxjs';

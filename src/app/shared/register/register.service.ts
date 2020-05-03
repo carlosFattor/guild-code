@@ -11,8 +11,8 @@ export class RegisterService {
     private registerApi: RegisterApi
   ) { }
 
-  registerSubscriber(subscriber: any): void {
-    this.registerApi.register(subscriber)
+  registerSubscriber(subscriber: any, email: string): void {
+    this.registerApi.register(subscriber, email)
       .pipe(take(1))
       .subscribe();
   }
