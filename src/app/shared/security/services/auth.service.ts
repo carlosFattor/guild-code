@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
+import { LoginData } from '@domain/login-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,8 +67,11 @@ export class AuthService {
   }
 
   loggedOut(): void {
-    this.storage.localStorage(null, data => {
-      data = null;
+    this.storage.localStorage(null, (data: LoginData) => {
+      if (data) {
+        delete data.tokenData;
+        delete data.userData;
+      }
       return data;
     });
     this.userState.user = null;

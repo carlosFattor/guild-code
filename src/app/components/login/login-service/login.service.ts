@@ -35,8 +35,13 @@ export class LoginService {
           take(1),
           tap(data => {
             const temp = this.storage.formatData<LoginData>(data);
-            this.storage.localStorage(null, () => {
-              return temp;
+            this.storage.localStorage(null, (store: LoginData) => {
+              if (!store) {
+                return temp;
+              }
+              store.tokenData = temp.tokenData;
+              store.userData = temp.userData;
+              return store;
             });
             this.userState.user = temp.userData;
           }),

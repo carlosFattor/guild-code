@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '@environment';
-import { SwPush } from '@angular/service-worker';
-import { RegisterService } from '@shared/register/register.service';
 import { PushNotificationService } from '@shared/push-notification/push-notification.service';
 
 @Component({

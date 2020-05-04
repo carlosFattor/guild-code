@@ -9,6 +9,7 @@ import { TagsModule } from '@components/tags/tags.module';
 import { MatIconModule } from '@angular/material/icon';
 import { GeoLocationModule } from '@shared/geo-location/geo-location.module';
 import { UserStateModule } from '@shared/user-state/user-state.module';
+import { PushNotificationModule } from '@shared/push-notification/push-notification.module';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -19,7 +20,8 @@ import { UserStateModule } from '@shared/user-state/user-state.module';
     TagsModule,
     MatIconModule,
     UserStateModule,
-    GeoLocationModule
+    GeoLocationModule,
+    PushNotificationModule
   ],
   providers: [
     LoginApi,
