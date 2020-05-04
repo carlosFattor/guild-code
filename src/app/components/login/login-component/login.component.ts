@@ -6,6 +6,7 @@ import { UserModel } from '@domain/user.model';
 import { LoginService } from '../login-service/login.service';
 import { AuthService } from '@shared/security/services/auth.service';
 import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
+import { PushNotificationService } from '@shared/push-notification/push-notification.service';
 
 @Component({
   selector: 'gc-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private loginService: LoginService,
-    private authService: AuthService
+    private authService: AuthService,
+    private pushNotificationService: PushNotificationService
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +42,10 @@ export class LoginComponent implements OnInit {
 
   showHideLoginForm(): string {
     return (this.showHideFormLogin) ? 'github-access-show' : 'github-access-hide';
+  }
+
+  subscriber(): void {
+    this.pushNotificationService.requestSubscription();
   }
 
   findMe(): void {

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PushNotificationService } from '@shared/push-notification/push-notification.service';
 
 @Component({
   selector: 'gc-root',
@@ -11,10 +10,8 @@ export class AppComponent implements OnInit {
   title = 'guild-code';
 
   constructor(
-    private pushNotification: PushNotificationService
   ) {
   }
   ngOnInit(): void {
-    this.pushNotification.requestSubscription();
   }
 }

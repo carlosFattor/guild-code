@@ -43,9 +43,9 @@ export class PushNotificationService {
       serverPublicKey: environment.VAPID_PUBLIC_KEY
     })
       .then(sub => {
-        if (!this.verifyIfAlreadySubscription()) {
-          const user = (this.userState.user) ? this.userState.user : null;
-          this.registerService.registerSubscriber(sub, user?.email || '');
+        const user = (this.userState.user) ? this.userState.user : null;
+        if (sub && user.email) {
+          this.registerService.registerSubscriber(sub, user.email);
           this.setSubscriptionUpdated();
         }
       })
@@ -60,12 +60,5 @@ export class PushNotificationService {
       data.sub = true;
       return data;
     });
-  }
-
-  private verifyIfAlreadySubscription(): boolean {
-    const sub = this.storage.localStorage('sub', (data) => {
-      return data;
-    });
-    return !!sub;
   }
 }
