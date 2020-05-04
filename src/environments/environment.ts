@@ -6,5 +6,5 @@ export const environment = {
   production: false,
   clientId: '7c88c94314b715f98752',
   server: 'http://localhost:3000',
-  VAPID_PUBLIC_KEY: 'BIsoIvPiDLfPD3fHDl2ezTAiE3uYfq9n61lcIFkjY0PLdWboiTWAHdnTDZ3tGbcvmkopcsYFB2c57rBSpYhp9Fs'
+  VAPID_PUBLIC_KEY: 'BESKYSAid9wijsRDO_b55NpYO5yZQSa2kCYCmAYK7-nb0suqGdxVH9gMbLsMMLonB5KxbnGkMbxuv2Wp3i-L9XU'
 };
