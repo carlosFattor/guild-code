@@ -18,8 +18,7 @@ export class PushNotificationService {
     private swPush: SwPush,
     private registerService: RegisterService,
     private userState: UserStateService,
-    private storage: StorageService,
-    private pushNotificationApi: PushNotificationApi
+    private storage: StorageService
   ) {
     this.listeningEvents();
   }
@@ -37,13 +36,6 @@ export class PushNotificationService {
           // window.location = event.notification.data.url;
         }
       });
-
-    this.userState.user$
-      .pipe(
-        first(user => user !== null),
-        tap(user => this.verifyUserSubscription(user.email))
-      )
-      .subscribe();
   }
 
   requestSubscription(): void {
@@ -68,17 +60,6 @@ export class PushNotificationService {
       data.sub = true;
       return data;
     });
-  }
-
-  private verifyUserSubscription(email: string): void {
-    this.pushNotificationApi.verifyUserSubscription(email)
-      .pipe(
-        take(1),
-        tap(() => {
-          this.requestSubscription();
-        })
-      )
-      .subscribe();
   }
 
   private verifyIfAlreadySubscription(): boolean {

@@ -10,6 +10,7 @@ import { UserStateService } from '@shared/user-state/user-state-service/user-sta
 import { LoginData } from '@domain/login-data.model';
 import { GeoLocationService } from '@shared/geo-location/geo-location.service';
 import { LatLng } from 'leaflet';
+import { PushNotificationService } from '@shared/push-notification/push-notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class LoginService {
     private loginApi: LoginApi,
     private storage: StorageService,
     private userState: UserStateService,
-    private geoLocationService: GeoLocationService
+    private geoLocationService: GeoLocationService,
+    private pushNotificationService: PushNotificationService
   ) {
     this.user$ = this.userState.user$;
   }
@@ -39,11 +41,13 @@ export class LoginService {
               if (!store) {
                 return temp;
               }
+              store.sub = false;
               store.tokenData = temp.tokenData;
               store.userData = temp.userData;
               return store;
             });
             this.userState.user = temp.userData;
+            this.pushNotificationService.requestSubscription();
           }),
           switchMap(loginData => of(loginData.userData)),
           tap(() => this.router.navigateByUrl('home'))
