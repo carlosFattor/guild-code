@@ -12,7 +12,7 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(() => {
   if (environment.production && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.getRegistration().then(active =>
-        !active && navigator.serviceWorker.register('/assets/ngsw-config.js')).catch(console.error);
+        !active && navigator.serviceWorker.register('/ngsw-config.js')).catch(console.error);
     });
   }
 }).catch(err => console.log(err));

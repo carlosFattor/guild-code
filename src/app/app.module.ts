@@ -33,7 +33,7 @@ import { PushNotificationModule } from '@shared/push-notification/push-notificat
     SecurityModule,
     StorageModule,
     ExceptionModule,
-    ServiceWorkerModule.register('assets/ngsw-config.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-config.js', { enabled: environment.production }),
     BrowserAnimationsModule,
     SnackMessagesModule,
     MatIconModule,
