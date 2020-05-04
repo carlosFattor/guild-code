@@ -53,7 +53,7 @@ export class PushNotificationService {
       .then(sub => {
         if (!this.verifyIfAlreadySubscription()) {
           const user = (this.userState.user) ? this.userState.user : null;
-          this.registerService.registerSubscriber(sub, user.email || '');
+          this.registerService.registerSubscriber(sub, user?.email || '');
           this.setSubscriptionUpdated();
         }
       })
