@@ -27,15 +27,17 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/_redirects",
+              "src/netlify.toml",
               {
                 "glob": "package.json",
                 "input": "./",
                 "output": "assets"
               },
               {
-                "glob": "custom-ngsw-config.js",
+                "glob": "ngsw-config.js",
                 "input": "./",
-                "output": "/"
+                "output": "assets"
               },
               {
                 "glob": "**/*",
