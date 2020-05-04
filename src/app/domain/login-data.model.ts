@@ -2,7 +2,7 @@ import { UserModel } from './user.model';
 import Tokens from './tokens.model';
 
 export interface LoginData {
-  tokenData: Tokens;
+  tokenData?: Tokens;
   userData?: UserModel;
   sub?: {
     sub: boolean

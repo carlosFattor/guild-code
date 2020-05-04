@@ -7,6 +7,7 @@ import { UserStateService } from '@shared/user-state/user-state-service/user-sta
 import { StorageService } from '@shared/storage/storage.service';
 import { filter, tap, take, first } from 'rxjs/operators';
 import { PushNotificationApi } from './push-notification.api';
+import { LoginData } from '@domain/login-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -58,12 +59,13 @@ export class PushNotificationService {
       })
       .catch(err => console.error('Could not subscribe to notifications', err));
   }
+
   setSubscriptionUpdated(): void {
-    this.storage.localStorage(null, (data: any) => {
+    this.storage.localStorage(null, (data: LoginData) => {
       if (!data) {
         data = {};
       }
-      return data.sub = { sub: true };
+      return data = { sub: { sub: true } };
     });
   }
 
