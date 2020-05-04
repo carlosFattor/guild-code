@@ -27,7 +27,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/_redirects",
               "src/netlify.toml",
               {
                 "glob": "package.json",
