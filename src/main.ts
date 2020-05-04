@@ -13,6 +13,6 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(() => {
     window.addEventListener('load', () => {
       navigator.serviceWorker.getRegistration().then(active =>
         !active && navigator.serviceWorker.register('/ngsw-config.js')).catch(console.error);
-    }
+    });
   }
 }).catch(err => console.log(err));
