@@ -65,7 +65,8 @@ export class PushNotificationService {
       if (!data) {
         data = {};
       }
-      return data = { sub: { sub: true } };
+      data.sub = { sub: true };
+      return data;
     });
   }
 
