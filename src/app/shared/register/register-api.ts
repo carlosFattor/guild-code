@@ -13,7 +13,7 @@ export class RegisterApi {
     private httpClient: HttpClient
   ) { }
 
-  register(subscriber: any, email: string): Observable<any> {
-    return this.httpClient.post(`${this.basePath}/subscriber`, { subscriber, email });
+  register(subscriber: any, email: string, device: string): Observable<any> {
+    return this.httpClient.post(`${this.basePath}/subscriber`, { subscriber, email, device });
   }
 }

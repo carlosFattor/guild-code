@@ -8,6 +8,7 @@ import { StorageService } from '@shared/storage/storage.service';
 import { filter, tap, take, first } from 'rxjs/operators';
 import { PushNotificationApi } from './push-notification.api';
 import { LoginData } from '@domain/login-data.model';
+import { UtilsService } from '@shared/utils/utils.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class PushNotificationService {
     private swPush: SwPush,
     private registerService: RegisterService,
     private userState: UserStateService,
-    private storage: StorageService
+    private storage: StorageService,
+    private utils: UtilsService
   ) {
     this.listeningEvents();
   }
@@ -45,7 +47,8 @@ export class PushNotificationService {
       .then(sub => {
         const user = (this.userState.user) ? this.userState.user : null;
         if (sub && user.email) {
-          this.registerService.registerSubscriber(sub, user.email);
+          const device = this.utils.getDevice();
+          this.registerService.registerSubscriber(sub, user.email, device);
           this.setSubscriptionUpdated();
         }
       })

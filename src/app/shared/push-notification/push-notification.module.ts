@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PushNotificationService } from './push-notification.service';
 import { StorageModule } from '@shared/storage/storage.module';
 import { PushNotificationApi } from './push-notification.api';
+import { UtilsModule } from '@shared/utils/utils.module';
 
 
 
@@ -13,7 +14,8 @@ import { PushNotificationApi } from './push-notification.api';
   ],
   providers: [
     PushNotificationService,
-    PushNotificationApi
+    PushNotificationApi,
+    UtilsModule
   ]
 })
 export class PushNotificationModule { }
