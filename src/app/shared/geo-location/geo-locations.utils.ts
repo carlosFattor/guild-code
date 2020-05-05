@@ -20,7 +20,7 @@ export class GeoLocationUtils {
   getDefaultMapOptions(): { [key: string]: any } {
     return {
       layers: [
-        tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
       ],
       zoom: 5,
       center: this.center
