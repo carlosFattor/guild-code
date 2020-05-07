@@ -9,18 +9,26 @@ import { filter, tap, take, first } from 'rxjs/operators';
 import { PushNotificationApi } from './push-notification.api';
 import { LoginData } from '@domain/login-data.model';
 import { UtilsService } from '@shared/utils/utils.service';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { SubscriptionType } from '@domain/subscription-type';
+import { SubscriptionFound } from '@domain/subscription-found';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PushNotificationService {
 
+  // tslint:disable-next-line:variable-name
+  private _notificationEnabled = new BehaviorSubject<boolean>(false);
+  notificationEnabled$ = this._notificationEnabled.asObservable();
+
   constructor(
     private swPush: SwPush,
     private registerService: RegisterService,
     private userState: UserStateService,
     private storage: StorageService,
-    private utils: UtilsService
+    private utils: UtilsService,
+    private pushApi: PushNotificationApi
   ) {
     this.listeningEvents();
   }
@@ -34,10 +42,22 @@ export class PushNotificationService {
     this.swPush.notificationClicks
       .subscribe((event) => {
         console.log('[Click] Notification clicked: ', event);
-        if (event.notification.data.url) {
-          // window.location = event.notification.data.url;
+        if (event?.notification?.data?.url) {
+          window.location = event.notification.data.url;
         }
       });
+  }
+
+  verifyUserSubscription(email: string, device: string): Observable<SubscriptionFound> {
+    return this.pushApi.verifyUserSubscription(email, device)
+      .pipe(
+        tap(data => this._notificationEnabled.next((data) ? true : false)),
+        tap(data => {
+          if (data.subscription.status) {
+            console.log('get subscription again and update it');
+          }
+        })
+      );
   }
 
   requestSubscription(): void {

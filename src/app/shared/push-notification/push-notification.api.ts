@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SubscriptionType } from '@domain/subscription-type';
+import { SubscriptionFound } from '@domain/subscription-found';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class PushNotificationApi {
     private httpClient: HttpClient
   ) { }
 
-  verifyUserSubscription(email: string): Observable<any> {
-    return this.httpClient.get<any>(`${this.URI_USER_SUBSCRIPTION}/${email}`);
+  verifyUserSubscription(email: string, device: string): Observable<SubscriptionFound> {
+    return this.httpClient.get<SubscriptionFound>(`${this.URI_USER_SUBSCRIPTION}/${email}/${device}`);
   }
 }
