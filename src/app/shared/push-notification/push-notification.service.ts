@@ -53,7 +53,7 @@ export class PushNotificationService {
       .pipe(
         tap(data => this._notificationEnabled.next((data) ? true : false)),
         tap(data => {
-          if (data.subscription.status) {
+          if (data?.subscription?.status) {
             console.log('get subscription again and update it');
           }
         })
