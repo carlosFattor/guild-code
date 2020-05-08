@@ -1,1 +1,17 @@
+.mat-snack-bar-container.warning {
+  color: 	#FF0000;
+}
 
+.mat-snack-bar-container.info {
+  color: #0000CD;
+}
+
+.mat-snack-bar-container.msg {
+  color: #708090;
+}
+
+.mat-snack-bar-container .flex {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}

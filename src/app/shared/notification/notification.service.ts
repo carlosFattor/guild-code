@@ -11,15 +11,15 @@ export class NotificationService {
     private zone: NgZone
   ) { }
 
-  showError(messages: string[], duration?: number): void {
+  showError(messages: string[], duration?: number, panelClass?: string): void {
     this.zone.runGuarded(() => {
-      this.snackService.openSnackInfoC(messages, duration);
+      this.snackService.openSnackInfoC(messages, duration, panelClass);
     });
   }
 
-  showInfoMessage(messages: string[], duration?: number): void {
+  showInfoMessage(messages: string[], duration?: number, panelClass?: string): void {
     this.zone.runGuarded(() => {
-      this.snackService.openSnackInfoC(messages, duration);
+      this.snackService.openSnackInfoC(messages, duration, panelClass);
     });
   }
 

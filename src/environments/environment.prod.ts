@@ -1,4 +1,5 @@
 export const environment = {
+  defaultLanguage: 'pt-br',
   production: true,
   clientId: '7c88c94314b715f98752',
   server: 'https://guild-code-back.herokuapp.com',

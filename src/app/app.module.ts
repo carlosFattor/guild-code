@@ -10,8 +10,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ExceptionModule } from '@shared/exception/exception.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SnackMessagesModule } from '@shared/snack-messages/snack-messages.module';
-import { MatIconModule } from '@angular/material/icon';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LoginModule } from '@components/login/login.module';
 import { PopUpModule } from '@shared/pop-up/pop-up.module';
@@ -19,6 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { RegisterModule } from '@shared/register/register.module';
 import { PushNotificationModule } from '@shared/push-notification/push-notification.module';
+import { AngularMaterialModule } from '@shared/angular-material/angular-material.module';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -28,15 +28,13 @@ import { PushNotificationModule } from '@shared/push-notification/push-notificat
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    // MapsModule.forRoot(),
     HttpClientModule,
     SecurityModule,
     StorageModule,
     ExceptionModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
-    SnackMessagesModule,
-    MatIconModule,
+    AngularMaterialModule,
     LeafletModule,
     LoginModule,
     RegisterModule,
@@ -45,6 +43,10 @@ import { PushNotificationModule } from '@shared/push-notification/push-notificat
   providers: [
     PopUpModule,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: environment.defaultLanguage
+    }
   ],
   bootstrap: [AppComponent]
 })

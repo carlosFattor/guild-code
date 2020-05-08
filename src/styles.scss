@@ -1,6 +1,28 @@
 @import "~leaflet/dist/leaflet.css";
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.basic-container {
+  padding: 30px;
+}
+
+.mat-snack-bar-container.warning {
+  color: 	#FF0000;
+}
+
+.mat-snack-bar-container.info {
+  color: #0000CD;
+}
+
+.mat-snack-bar-container.msg {
+  color: #708090;
+}
+
+.mat-snack-bar-container .flex {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}

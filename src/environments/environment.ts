@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  defaultLanguage: 'pt-br',
   production: false,
   clientId: '7c88c94314b715f98752',
   server: 'http://localhost:3000',

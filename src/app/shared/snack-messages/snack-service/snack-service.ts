@@ -6,15 +6,17 @@ import { SnackInfoComponent } from '../snack-info/snack-info.component';
 export class SnackService {
 
   private durationInSeconds = 3;
+  private panelClass = 'warning';
 
   constructor(
     private snackBar: MatSnackBar
   ) { }
 
-  openSnackInfoC(messages: string[], duration: number = this.durationInSeconds): void {
+  openSnackInfoC(messages: string[], duration: number = this.durationInSeconds, panelClass: string = this.panelClass): void {
     this.snackBar.openFromComponent<SnackInfoComponent>(SnackInfoComponent, {
       duration,
       horizontalPosition: 'center',
+      panelClass,
       data: { messages }
     });
   }
