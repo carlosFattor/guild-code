@@ -8,6 +8,7 @@ import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserStateService } from '@shared/user-state/user-state-service/user-state.service';
 import { LoginData } from '@domain/login-data.model';
+import { HttpInterceptionErrorResponse } from '@shared/exception/exceptions/impl/http-interception-error.response';
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +62,7 @@ export class AuthService {
       }),
       catchError((error: HttpErrorResponse) => {
         this.loggedOut();
-        return throwError(error);
+        return throwError(new HttpInterceptionErrorResponse(error.error));
       })
     );
   }
@@ -71,6 +72,7 @@ export class AuthService {
       if (data) {
         delete data.tokenData;
         delete data.userData;
+        delete data.sub;
       }
       return data;
     });

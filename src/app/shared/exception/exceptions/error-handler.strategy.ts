@@ -7,6 +7,7 @@ import { AuthService } from '@shared/security/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { GenericHttpErrorResponse } from './impl/generic-http-error-response';
 import { GeolocationErrorResponse } from './impl/geolocation-error.response';
+import { HttpInterceptionErrorResponse } from './impl/http-interception-error.response';
 
 @Injectable()
 export class ErrorHandlesStrategy {
@@ -22,6 +23,9 @@ export class ErrorHandlesStrategy {
     switch (error.constructor) {
       case GeolocationErrorResponse:
         return new GeolocationErrorResponse(error, logger, notifier, errorService);
+
+      case HttpInterceptionErrorResponse:
+        return new HttpInterceptionErrorResponse(error, logger, errorService);
 
       default:
         return new GenericHttpErrorResponse(error, logger, notifier, errorService, authService);

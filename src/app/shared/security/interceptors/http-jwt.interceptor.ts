@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import Tokens from '@domain/tokens.model';
 import { Injectable } from '@angular/core';
+import { HttpInterceptionErrorResponse } from '@shared/exception/exceptions/impl/http-interception-error.response';
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +31,11 @@ export class HttpJwtInterceptor implements HttpInterceptor {
 
     return next.handle(req)
       .pipe(
-        catchError((error: Observable<HttpEvent<any>>) => {
+        catchError((error: HttpErrorResponse) => {
           if (error instanceof HttpErrorResponse && error.status === this.HTTP_ERROR_CODE) {
             return this.handleRefreshToken(req, next);
           } else {
-            return throwError(error);
+            return throwError(new HttpInterceptionErrorResponse(error.error));
           }
         })
       );
