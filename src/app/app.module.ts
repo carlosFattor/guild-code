@@ -19,6 +19,7 @@ import { RegisterModule } from '@shared/register/register.module';
 import { PushNotificationModule } from '@shared/push-notification/push-notification.module';
 import { AngularMaterialModule } from '@shared/angular-material/angular-material.module';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { ContainerModule } from '@shared/container/container.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     LeafletModule,
     LoginModule,
     RegisterModule,
-    PushNotificationModule
+    PushNotificationModule,
+    ContainerModule
   ],
   providers: [
     PopUpModule,
